@@ -1,0 +1,20 @@
+/* Esto es un PDF, habría que usar unidades responsive? */
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1cm;
+}
+
+.header_title {
+    font-size: 1.25cm;
+    font-family: Tahoma, sans-serif;
+}
+
+.body_text {
+    margin-top: 0.5cm;
+    font-size: 0.75cm;
+    font-family: Tahoma, sans-serif;
+}

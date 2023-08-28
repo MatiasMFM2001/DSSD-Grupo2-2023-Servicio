@@ -1,0 +1,4 @@
+**/__pycache__
+**/*.pdf
+/.vscode
+!Informe - Proyecto de Software - Grupo 20.pdf

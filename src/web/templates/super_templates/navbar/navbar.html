@@ -1,0 +1,49 @@
+{% macro render_dropdowns(dropdowns) %}
+    {% for group in dropdowns %}
+        {% with custom_buttons = group.get_buttons(row) %}
+            {% if custom_buttons %}
+                <li class="nav-item {{ group.get_class(custom_buttons) }}">
+                    {% if group.is_one(custom_buttons) %}
+                        {% with button = custom_buttons[0] %}
+                            <a class="nav-link {{ group.mark_active(request.path) }}" href="{{ group.get_url(button) }}">{{ group.get_display_name(button) }}</a>
+                        {% endwith %}
+                    {% else %}
+                        <a href="#" class="nav-link dropdown-toggle {{ group.mark_active(request.path) }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ group.display_name }}
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            {% for button in custom_buttons %}
+                                <li><a href="{{ group.get_url(button) }}" class="dropdown-item">{{ button.display_name }}</a></li>
+                            {% endfor %}
+                        </ul> 
+                    {% endif %}
+                </li>
+            {% endif %}
+        {% endwith %}
+    {% endfor %}
+{% endmacro %}
+
+
+<nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('privada.home') }}">
+            <img width="40" height="44" alt="Logo de club" src="{{ url_for('static', filename='images/LogoSinLetrasReforzadoV4.png') }}" />
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {{ render_dropdowns(left_dropdowns) }}
+            </ul>
+            
+            <ul class="navbar-nav d-flex">
+                {{ render_dropdowns(right_dropdowns) }}
+            </ul>
+        </div>
+    </div>
+</nav>

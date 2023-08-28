@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
+
+table {
+    width: 100%;
+    table-layout: fixed;
+    text-align: center;
+    word-wrap: break-word;
+    font-family: 'Montserrat', Helvetica, sans-serif;
+}
+
+th {
+    background-color: #000;
+    color: white;
+    padding: 0.3125rem;
+    border: 0.125em solid #FFF;
+}
+
+td {
+    color: black;
+    padding: 0.3125rem;
+    border: 0.125em solid #FFF;
+}
+
+tr {
+  page-break-inside: avoid;
+}
+table tr:nth-child(odd) td{
+    background-color: #DDD;
+}
+table tr:nth-child(even) td{
+    background-color: #BBB;
+}

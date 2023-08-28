@@ -1,0 +1,42 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.div{
+    align-items: center;
+    justify-content: center;
+}
+
+.header_div { 
+    grid-area: 1 / 1 / 2 / 4;
+}
+
+.img_div { 
+    grid-area: 2 / 1 / 4 / 2;
+}
+
+.body_div { grid-area: 2 / 2 / 4 / 4; }
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1cm;
+}
+
+
+.header_title {
+    font-size: 1.25cm;
+    font-family: Tahoma, sans-serif;
+}
+
+.body_text {
+    margin-top: 0.5cm;
+    font-size: 0.75cm;
+    font-family: Tahoma, sans-serif;
+}

@@ -1,0 +1,29 @@
+.image{
+    width: 5cm;
+}
+
+.data{
+    display: table-row;
+    text-align: center;
+}
+
+table {
+    font-family: 'Montserrat', Helvetica, sans-serif;
+}
+
+th {
+    background-color: #000;
+    color: white;
+    padding: 1rem;
+    border: 0.125em solid #FFF;
+}
+
+td {
+    color: black;
+    padding: 0.3125rem;
+    border: 0.125em solid #FFF;
+}
+
+tr {
+  page-break-inside: avoid;
+}

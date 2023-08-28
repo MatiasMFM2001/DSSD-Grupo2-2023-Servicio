@@ -1,0 +1,13 @@
+.alert {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
+
+.close-btn {
+    cursor: pointer;
+    font-size: 1.875rem;
+    min-width: 3rem;
+    text-align: end;
+}

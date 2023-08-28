@@ -1,0 +1,25 @@
+<meta charset="utf-8">
+<html>
+    <body>
+        <table>
+            <th colspan="2"><h1>Club Deportivo Villa Elisa</h1></th>   
+            <tr>
+                <td>
+                    <img class="image" src="{{root_path}}/{{associate.relative_path()}}"></img>
+                </td>
+                <td>
+                    <img src="{{root_path}}{{ url_for('static', filename='images/qr{associate_id}.png'.format(associate_id=associate.id))}}" class="card-img-top align-self-center" alt="qr" style="width:10rem" >
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="data">
+                    <h2>{{associate.full_name}}</h2>
+                    <h3>{{associate.doc_type}}: {{associate.doc_number}}</h3>
+                    <h3>Socio: {{associate.id}}</h3>
+                    <h3>Fecha de Alta: {{format_date(associate.created_at, "%d/%m/%Y")}}</h3>
+                    <h3>Estado: {{state}}</h3>
+                </td>
+            </tr>
+        </table>
+    </body>   
+</html>

@@ -1,0 +1,26 @@
+.btn {
+    white-space: normal;
+}
+
+
+
+@media (min-width: 768px) {
+    #search-input {
+        min-width: 10rem;
+    }
+
+  }
+
+@media(max-width:360px){
+    #form-searchbar{
+        flex-wrap: wrap;
+    }
+    .btn{
+        width: 100%;
+    }
+
+    #paginator-div{
+        width: 100%;
+    }
+
+}

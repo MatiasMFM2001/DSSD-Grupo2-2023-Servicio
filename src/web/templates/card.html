@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Ver Carnet
+{% endblock %}
+{% block head %}
+    
+{% endblock %}
+
+{% block content %}
+    <div class="container border" style="width:50%;">
+
+        <div class="row">
+            <div class="col text-center">
+                <h1 class="align-self-center"> Club Deportivo Villa Elisa </h2>
+            </div>
+        </div>
+        <div class="row border">
+            <div class="col-xl-4">
+                <div class="card text-center border-0" style="width: 18rem;">
+                    <img src="{{root_path}}/{{ associate.relative_path() }}" class="card-img-top align-self-center m-2" alt="Foto de perfil del socio" style="width:12rem;" >
+                    <div class="card-body">
+                      <h3 class="card-title">Estado: {{ state }}</h3>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-xl-8 text-center">
+                <h3> {{associate.first_name}} {{associate.last_name}} </h3>
+                <h6> {{associate.doc_type}}: {{associate.doc_number}}</h6>
+                <h6> Socio: {{associate.id}}</h6>
+                <h6> Fecha Alta: {{format_date(associate.created_at, "%d/%m/%Y")}}</h6>
+                <img src="{{root_path}}{{ url_for('static', filename='images/qr{associate_id}.png'.format(associate_id=associate.id))}}" class="card-img-top align-self-center" alt="qr" style="width:10rem" >
+            </div>
+        </div>
+
+    </div>
+    <button type="button" class="btn btn-outline-success" onclick="location.href='{{ url_for('privada.socios.download_card', id=associate.id) }}'">Descargar</button>
+{% endblock %}
