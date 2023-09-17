@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, url_for, redirect, flash, request, session
-from pyparsing import Regex
 from src.web.views.forms.auth import *
 from src.web.templates import super_templates
 from src.core.business.user_manager import auth_m

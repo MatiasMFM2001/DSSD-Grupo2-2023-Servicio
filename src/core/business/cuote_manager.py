@@ -1,5 +1,4 @@
 import datetime
-from attr import validate
 from src.core.business.crud_manager import CRUDManager
 from src.core.database.board import Cuote
 from src.core.database.auth import Associate

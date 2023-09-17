@@ -1,6 +1,5 @@
-from attr import validate
-from core.business.service_manager import DisciplineManager
-from core.database.board import Category
+from src.core.business.service_manager import DisciplineManager
+from src.core.database.board import Category
 from flask import Blueprint, request, url_for, flash, redirect
 from src.web.templates import super_templates
 from src.core.business.user_manager import auth_m
