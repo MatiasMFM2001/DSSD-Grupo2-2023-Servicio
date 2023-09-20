@@ -7,13 +7,12 @@ from src.web.blueprints.sysconfig_bp import sysconfig_bp
 from src.web.blueprints.users_bp import users_bp
 from src.web.blueprints.auth_bp import auth_bp
 from src.core.business.user_manager import auth_m
-from src.api.api_bp import api_disciplines_bp, api_cuotes_bp, api_info_bp
+from src.api.root_api_bp import root_api_bp
 from src.web.blueprints.graphics_bp import graphics_bp
 
 root_bp = Blueprint(
     "privada", __name__, url_prefix="/", template_folder="templates/private/"
 )
-
 
 for blueprint in [
     auth_bp,
@@ -22,11 +21,9 @@ for blueprint in [
     sysconfig_bp,
     users_bp,
     graphics_bp,
+    root_api_bp,
 ]:
     root_bp.register_blueprint(blueprint)
-
-for APIs in [api_disciplines_bp, api_cuotes_bp, api_info_bp]:
-    root_bp.register_blueprint(APIs)
 
 
 @root_bp.route("/inicio")

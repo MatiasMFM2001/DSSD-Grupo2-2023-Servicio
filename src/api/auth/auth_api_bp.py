@@ -4,10 +4,10 @@ from src.api.responses import SimpleOKResponse, SimpleErrorResponse
 from src.api.auth.jwt import encode
 from src.api import requests
 
-auth_bp = Blueprint("autenticación", __name__, url_prefix="")
+auth_api_bp = Blueprint("autenticación", __name__, url_prefix="")
 
 
-@auth_bp.route("/login/", methods=["POST"])
+@auth_api_bp.route("/login/", methods=["POST"])
 def login():
     values, error = requests.get_json({"user", "password"})
 
@@ -23,7 +23,7 @@ def login():
     return SimpleOKResponse("La sesión ha sido iniciada correctamente", token=token)
 
 
-@auth_bp.route("/me/editar_perfil", methods=["POST"])
+@auth_api_bp.route("/me/editar_perfil", methods=["POST"])
 @auth_m.login_required(True)
 def profile(associate):
     values, error = requests.get_json({"new_pass"})

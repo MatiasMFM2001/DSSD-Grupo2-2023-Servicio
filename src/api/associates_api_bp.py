@@ -1,73 +1,25 @@
+from flask import Blueprint, request
 from datetime import date
-from flask import Blueprint, request, abort, jsonify
-from werkzeug.exceptions import HTTPException
-from src.core.business.service_manager import DisciplineManager
-from src.core.business.cuote_manager import CuoteManager
+
 from src.core.business.associate_manager import AssociateManager, auth_m
-from src.core.business.config_manager import ConfigManager
+from src.core.business.cuote_manager import CuoteManager
+
+from src.api.helpers import to_json, paginator_to_json
+from src.api.responses import SimpleOKResponse, SimpleErrorResponse
+from src.api import requests
+
 from src.web.helpers.controller_helpers import (
     api_validate_id,
     get_int,
     api_validate_file,
 )
-from io import BytesIO
-import re, magic
-from src.api import requests
-from src.api.responses import SimpleOKResponse, SimpleErrorResponse
-from src.api.auth import jwt
-from src.api.auth.auth_bp import auth_bp
 
-api_disciplines_bp = Blueprint("api_disciplines_bp", __name__, url_prefix="/api")
-api_cuotes_bp = Blueprint("api_cuotes_bp", __name__, url_prefix="/api")
-api_info_bp = Blueprint("api_info_bp", __name__, url_prefix="/api")
+associates_api_bp = Blueprint("associates_api_bp", __name__, url_prefix="/me")
 
-api_disciplines_bp.register_blueprint(auth_bp)
-
-disciplines_m = DisciplineManager()
-cuote_m = CuoteManager()
 associate_m = AssociateManager()
-config_m = ConfigManager()
+cuote_m = CuoteManager()
 
-
-def to_json(rows):
-    """Convierte los datos de una lista o consulta a JSON."""
-    return [row.get_json() for row in rows]
-
-
-def paginator_to_json(paginator):
-    """Convierte una página y sus items a JSON."""
-    return dict(
-        has_next=paginator.has_next,
-        has_prev=paginator.has_prev,
-        items=to_json(paginator.items),
-        next_num=paginator.next_num,
-        page=paginator.page,
-        pages=paginator.pages,
-        per_page=paginator.per_page,
-        prev_num=paginator.prev_num,
-        total=paginator.total,
-    )
-
-
-@api_disciplines_bp.route("/club/disciplines", methods=["GET"])
-def disciplines_of_club():
-    """Obtiene todas las disciplinas que se realizan en el club."""
-
-    page_number, error = get_int(request.args, "page", SimpleErrorResponse, "página")
-
-    if error:
-        return error
-
-    try:
-        disciplines = paginator_to_json(
-            disciplines_m.filter_by_get_paginator(page_number)
-        )
-        return SimpleOKResponse(disciplines=disciplines)
-    except HTTPException:
-        return SimpleErrorResponse(404, f"La página {page_number} no existe")
-
-
-@api_disciplines_bp.route("/me/disciplines", methods=["GET"])
+@associates_api_bp.route("/disciplines", methods=["GET"])
 @auth_m.login_required(True)
 def disciplines_of_user(associate):
     """Obtiene la lista de las disciplinas a las que está inscripto el usuario."""
@@ -75,8 +27,7 @@ def disciplines_of_user(associate):
     disciplines = to_json(associate_m.get_disciplines_of_associate(associate.id))
     return SimpleOKResponse(disciplines=disciplines)
 
-
-@api_cuotes_bp.route("/me/payments", methods=["GET"])
+@associates_api_bp.route("/payments", methods=["GET"])
 @auth_m.login_required(True)
 def associate_cuotes_list(associate):
     """Obtiene la lista de cuotas pagadas, pendientes o impagas del asociado."""
@@ -93,7 +44,7 @@ def associate_cuotes_list(associate):
         return SimpleErrorResponse(404, f"La página {page_number} no existe")
 
 
-@api_cuotes_bp.route("/me/defaulter", methods=["GET"])
+@associates_api_bp.route("/defaulter", methods=["GET"])
 @auth_m.login_required(True)
 def associate_is_defaulter(associate):
     """Retorna TRUE si el socio es moroso."""
@@ -101,7 +52,7 @@ def associate_is_defaulter(associate):
     return SimpleOKResponse(is_defaulter=cuote_m.is_defaulter(associate.id))
 
 
-@api_cuotes_bp.route("/me/payments", methods=["POST"])
+@associates_api_bp.route("/payments", methods=["POST"])
 @auth_m.login_required(True)
 def associate_register_receipt(associate):
     """Registra un nuevo pago para el usuario."""
@@ -138,7 +89,7 @@ def associate_register_receipt(associate):
     return SimpleOKResponse(cuote=cuote.get_json())
 
 
-@api_cuotes_bp.route("/me/license", methods=["POST"])
+@associates_api_bp.route("/license", methods=["POST"])
 @auth_m.login_required(True)
 def associate_license(associate):
     """Obtiene información necesaria para renderizar el carnet en el Front-End."""
@@ -150,24 +101,14 @@ def associate_license(associate):
     )
     return SimpleOKResponse(description=description, profile=associate.get_json())
 
-
-@api_info_bp.route("/club/info", methods=["GET"])
-def club_info():
-    """Obtiene información importante y de contacto sobre el club."""
-
-    return SimpleOKResponse(
-        email=config_m.get_field("club_email"), phone=config_m.get_field("phone_number")
-    )
-
-
-@api_info_bp.route("me/profile", methods=["GET"])
+@associates_api_bp.route("/profile", methods=["GET"])
 @auth_m.login_required(True)
 def associate_profile(associate):
     """Obtiene información del perfil del asociado."""
     return SimpleOKResponse(associate=associate.get_json())
 
 
-@api_info_bp.route("me/cuote_detail", methods=["POST"])
+@associates_api_bp.route("/cuote_detail", methods=["POST"])
 @auth_m.login_required(True)
 def cuote_detail(associate):
     """Obtiene información de de la cuota del mes del socio."""
