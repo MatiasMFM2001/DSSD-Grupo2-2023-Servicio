@@ -6,9 +6,9 @@ from src.web.blueprints.disciplines_bp import disciplines_bp
 from src.web.blueprints.sysconfig_bp import sysconfig_bp
 from src.web.blueprints.users_bp import users_bp
 from src.web.blueprints.auth_bp import auth_bp
-from src.core.business.user_manager import auth_m
-from src.api.root_api_bp import root_api_bp
 from src.web.blueprints.graphics_bp import graphics_bp
+from src.api.blueprints.root_api_bp import root_api_bp
+from src.core.business.user_manager import auth_m
 
 root_bp = Blueprint(
     "privada", __name__, url_prefix="/", template_folder="templates/private/"

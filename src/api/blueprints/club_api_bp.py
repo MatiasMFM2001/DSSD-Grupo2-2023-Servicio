@@ -4,7 +4,7 @@ from src.core.business.service_manager import DisciplineManager
 from src.core.business.config_manager import ConfigManager
 
 from src.api.helpers import paginator_to_json
-from src.api.responses import SimpleOKResponse, SimpleErrorResponse
+from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
 from src.web.helpers.controller_helpers import get_int
 
 club_api_bp = Blueprint("club_api_bp", __name__, url_prefix="/club")

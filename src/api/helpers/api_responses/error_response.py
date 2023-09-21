@@ -1,7 +1,7 @@
 from __future__ import annotations
 from flask import json, current_app
 from werkzeug.datastructures import MultiDict
-from src.api.responses.base_response import BaseResponse
+from src.api.helpers.api_responses.base_response import BaseResponse
 
 
 """Respuesta JSON errónea a enviar como respuesta de la API REST."""

@@ -1,6 +1,6 @@
 from __future__ import annotations
-from src.api.responses.ok_response import OKResponse
-from src.api.responses.error_response import ErrorResponse
+from src.api.helpers.api_responses.ok_response import OKResponse
+from src.api.helpers.api_responses.error_response import ErrorResponse
 
 
 def SimpleOKResponse(

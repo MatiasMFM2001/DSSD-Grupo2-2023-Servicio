@@ -6,8 +6,8 @@ from src.core.database.board import Service, Discipline
 from src.core.database.board.associate_service import associate_service
 from src.core.business.service_manager import DisciplineManager
 from src.core.business.cuote_manager import CuoteManager
-from src.api.auth.jwt import try_decode, encode
-from src.api.responses import SimpleErrorResponse
+from src.api.helpers.jwt_helpers import try_decode, encode
+from src.api.helpers.api_responses import SimpleErrorResponse
 from typing import Optional
 from flask import request
 import functools

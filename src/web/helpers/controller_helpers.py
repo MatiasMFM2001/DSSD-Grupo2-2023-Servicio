@@ -1,7 +1,7 @@
 from xml.etree.ElementInclude import include
 from flask import Response, abort, request
 from urllib.parse import urlencode
-from src.api.responses import SimpleErrorResponse
+from src.api.helpers.api_responses import SimpleErrorResponse
 from io import BytesIO
 import re, magic
 

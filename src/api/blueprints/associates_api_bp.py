@@ -5,8 +5,8 @@ from src.core.business.associate_manager import AssociateManager, auth_m
 from src.core.business.cuote_manager import CuoteManager
 
 from src.api.helpers import to_json, paginator_to_json
-from src.api.responses import SimpleOKResponse, SimpleErrorResponse
-from src.api import requests
+from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
+from src.api.helpers.api_requests import get_json
 
 from src.web.helpers.controller_helpers import (
     api_validate_id,
@@ -112,7 +112,7 @@ def associate_profile(associate):
 @auth_m.login_required(True)
 def cuote_detail(associate):
     """Obtiene información de de la cuota del mes del socio."""
-    dato, error = requests.get_json({"month", "year"})
+    dato, error = get_json({"month", "year"})
 
     if error:
         return error

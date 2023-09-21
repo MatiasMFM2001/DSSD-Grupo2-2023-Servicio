@@ -1,5 +1,5 @@
 from __future__ import annotations
-from src.api.responses.base_response import BaseResponse
+from src.api.helpers.api_responses.base_response import BaseResponse
 from typing import Iterable
 
 

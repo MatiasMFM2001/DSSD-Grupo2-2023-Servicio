@@ -1,8 +1,8 @@
 from flask import Blueprint
 
-from src.api.auth.auth_api_bp import auth_api_bp
-from src.api.associates_api_bp import associates_api_bp
-from src.api.club_api_bp import club_api_bp
+from src.api.blueprints.auth_api_bp import auth_api_bp
+from src.api.blueprints.associates_api_bp import associates_api_bp
+from src.api.blueprints.club_api_bp import club_api_bp
 
 root_api_bp = Blueprint("api", __name__, url_prefix="/api")
 

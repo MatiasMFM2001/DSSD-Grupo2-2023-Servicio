@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Tuple, Optional, Set, TypeVar
 from flask import request
-from src.api.responses import SimpleOKResponse, SimpleErrorResponse
+from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
 
 T = TypeVar("T")
 
