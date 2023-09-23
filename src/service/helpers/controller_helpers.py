@@ -1,9 +1,9 @@
 from xml.etree.ElementInclude import include
 from flask import Response, abort, request
 from urllib.parse import urlencode
-from src.api.helpers.api_responses import SimpleErrorResponse
+#from src.api.helpers.api_responses import SimpleErrorResponse
 from io import BytesIO
-import re, magic
+import re
 
 
 def PDFResponse(pdf_bytes, filename, as_attachment):
@@ -148,7 +148,7 @@ def validate_id(
 
     return result[0]
 
-
+'''
 def api_validate_id(
     manager, request_args, include_inactive=False, key="id", tuple_name="La tupla"
 ):
@@ -198,4 +198,4 @@ def validate_file(
 def api_validate_file(request_files, field_name, allowed_mimes):
     return internal_validate_file(
         request_files, field_name, allowed_mimes, SimpleErrorResponse
-    )
+    )'''

@@ -1,11 +1,12 @@
-from src.core.database import db
 from datetime import datetime
-
-user_role = db.Table(
-    "user_role",
-    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
-    db.Column("role_id", db.Integer, db.ForeignKey("roles.id")),
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from src.core.database.db_instance import db
+from src.core.database.auth.user_role import user_role
+from src.core.database.resource_managers.user_resource_manager import (
+    UserResourceManager,
 )
+
 
 class User(db.Model):
     __tablename__ = "users"
@@ -15,6 +16,8 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
+    active = db.Column(db.Boolean, nullable=False, default=True)
+    updated_at = db.Column(db.DateTime, nullable=True, default=None)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     roles = db.relationship("Role", secondary=user_role, back_populates="users")
 
@@ -25,6 +28,15 @@ class User(db.Model):
             str: Representación del objeto.
         """
         return f"Usuario con nombre {self.first_name} {self.last_name}, con email {self.email}, roles {self.roles}"
+
+    @staticmethod
+    def resource_manager():
+        """Retorna el resource manager para este modelo.
+
+        Returns:
+            UserResourceManager: Resource manager para este modelo.
+        """
+        return UserResourceManager(db.session, User)
 
     @property
     def full_name(self):
