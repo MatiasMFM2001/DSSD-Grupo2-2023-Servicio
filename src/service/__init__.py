@@ -3,7 +3,7 @@ from src.service.config import config
 from src.service.helpers import handlers
 from src.core.database.db_instance import db
 from src.core.database import database
-#from src.web.blueprints.root_bp import root_bp
+from src.api.blueprints.root_api_bp import root_api_bp
 from src.service.helpers import controller_helpers
 from flask_cors import CORS
 
@@ -53,6 +53,6 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
 
     app.jinja_env.globals.update(generate_url=controller_helpers.generate_url)
 
-    #pp.register_blueprint(root_bp)
+    app.register_blueprint(root_api_bp)
 
     return app
