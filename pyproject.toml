@@ -1,38 +1,19 @@
 [tool.poetry]
-name = "web"
+name = "servicio"
 version = "0.1.0"
 description = ""
-authors = ["Joaquin Olmos <joaquiniolmos@gmail.com>"]
+authors = ["Matías Manzin <matias.manzin@outlook.com.ar>"]
 readme = "README.md"
-packages = [{include = "web", from = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-Flask = "^2.2.2"
-black = "^22.8.0"
-Flask-SQLAlchemy = "^3.0"
-psycopg2-binary = "^2.9.3"
-Flask-WTF = "^1.0.1"
-passlib = "^1.7.4"
-pdfkit = "^1.0.0"
-num2words = "^0.5.12"
-APScheduler = "^3.9.1"
-Flask-APScheduler = "^1.12.4"
-SQLAlchemy-Utils = "^0.38.3"
-PyJWT = "^2.6.0"
-qrcode = "^7.3.1"
-image = "^1.5.33"
-Flask-Cors = "^3.0.10"
-python-magic = "^0.4.27"
+python = "^3.10"
+Flask-SQLAlchemy = "^3.1.1"
+Flask = "^2.3.3"
+black = "^23.9.1"
+psycopg2-binary = "^2.9.7"
+PyJWT = "^2.8.0"
+Flask-Cors = "^4.0.0"
 
-
-[tool.poetry.group.dev.dependencies]
-black = "^22.8.0"
-autopep8 = "^1.7.0"
-
-
-[tool.poetry.group.test.dependencies]
-pytest = "^7.1.3"
 
 [build-system]
 requires = ["poetry-core"]
