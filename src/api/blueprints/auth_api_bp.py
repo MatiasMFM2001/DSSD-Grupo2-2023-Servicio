@@ -8,6 +8,7 @@ auth_api_bp = Blueprint("autenticación", __name__, url_prefix="")
 
 
 @auth_api_bp.route("/login/", methods=["POST"])
+@auth_m.permission_required("private_login", login_required=False)
 def login():
     values, error = get_json({"user", "password"})
 
@@ -24,7 +25,7 @@ def login():
 
 
 @auth_api_bp.route("/me/editar_perfil", methods=["POST"])
-@auth_m.login_required(True)
+@auth_m.permission_required("private_profile_edit", call_with_current_user=True)
 def profile(associate):
     values, error = get_json({"new_pass"})
 

@@ -12,7 +12,7 @@ associates_api_bp = Blueprint("associates_api_bp", __name__, url_prefix="/me")
 user_m = UserManager()
 
 @associates_api_bp.route("/profile", methods=["GET"])
-@auth_m.login_required(True)
+@auth_m.permission_required("private_profile_get", call_with_current_user=True)
 def associate_profile(associate):
     """Obtiene información del perfil del asociado."""
     return SimpleOKResponse(associate=associate.get_json())
