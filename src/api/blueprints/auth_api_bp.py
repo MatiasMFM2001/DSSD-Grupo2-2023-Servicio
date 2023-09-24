@@ -7,15 +7,15 @@ from src.api.helpers.api_requests import get_json
 auth_api_bp = Blueprint("autenticación", __name__, url_prefix="")
 
 
-@auth_api_bp.route("/login/", methods=["POST"])
+@auth_api_bp.route("/login", methods=["POST"])
 @auth_m.permission_required("private_login", login_required=False)
 def login():
-    values, error = get_json({"user", "password"})
+    values, error = get_json({"email", "password"})
 
     if error:
         return error
 
-    associate = auth_m.login(values["user"], values["password"])
+    associate = auth_m.login(values["email"], values["password"])
 
     if associate is None:
         return SimpleErrorResponse(401, "Credenciales inválidas")
