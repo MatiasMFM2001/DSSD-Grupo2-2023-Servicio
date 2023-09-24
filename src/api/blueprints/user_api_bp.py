@@ -16,3 +16,4 @@ user_m = UserManager()
 def associate_profile(associate):
     """Obtiene información del perfil del asociado."""
     return SimpleOKResponse(associate=associate.get_json())
+
