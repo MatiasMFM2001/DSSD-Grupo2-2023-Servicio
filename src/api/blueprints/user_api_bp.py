@@ -7,11 +7,11 @@ from src.api.helpers import to_json, paginator_to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
 from src.api.helpers.api_requests import get_json
 
-associates_api_bp = Blueprint("associates_api_bp", __name__, url_prefix="/me")
+user_api_bp = Blueprint("user_api_bp", __name__, url_prefix="/me")
 
 user_m = UserManager()
 
-@associates_api_bp.route("/profile", methods=["GET"])
+@user_api_bp.route("/profile", methods=["GET"])
 @auth_m.permission_required("private_profile_get", call_with_current_user=True)
 def associate_profile(associate):
     """Obtiene información del perfil del asociado."""
