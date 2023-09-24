@@ -130,8 +130,8 @@ class UserManager(AccountManager):
 
 """Capa de negocio de alto nivel, para la tabla de Usuarios de la BD, donde se requiere hacer CRUDs sobre sus tuplas, y manejar autenticación, sesiones y permisos."""
 class AuthManager(UserManager):
-    def token_of(self, associate) -> str:
-        return encode(id=associate.id)
+    def token_of(self, user) -> str:
+        return encode(id=user.id)
 
     def current_token(self) -> Optional[str]:
         full_header = request.headers.get("Authorization", "")
@@ -156,13 +156,13 @@ class AuthManager(UserManager):
 
         return try_decode(token).get("id")
 
-    def current_user(self) -> Optional[Associate]:
-        associate_id = self.current_id()
+    def current_user(self) -> Optional[User]:
+        user_id = self.current_id()
 
-        if associate_id is None:
+        if user_id is None:
             return None
 
-        return self.database.get(associate_id)
+        return self.database.get(user_id)
     
     def has_permission(self, user_id, permit_name):
         """Verifica si un usuario tiene un permiso.
@@ -193,7 +193,7 @@ class AuthManager(UserManager):
         if user_id is None:
             return False
 
-        return self.database.exists(associate_id)
+        return self.database.exists(user_id)
     
     def permission_required(self, permit_name, login_required=True, call_with_current_user=False):
         """Verifica si el usuario está logueado y tiene un permiso.
