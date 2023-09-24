@@ -194,47 +194,6 @@ class AuthManager(UserManager):
             return False
 
         return self.database.exists(associate_id)
-
-    def login_required(self, call_with_current_associate=False):
-        """Verifica si el usuario está logueado.
-
-        Args:
-            call_with_current_associate (bool): Si es True, el primer argumento
-                que se le pasará a la función decorada será el socio actual (el
-                que llamó al endpoint).
-        """
-
-        def decorator(func):
-            """Recibe una función y la retorna con la validación de login.
-            Args:
-                func (function): Función a validar.
-
-            Returns:
-                any: Resultado de la función.
-            """
-
-            @functools.wraps(func)
-            def wrapper(*args, **kwargs):
-                """Verifica si el usuario está logueado.
-
-                Returns:
-                    any: Resultado de la función.
-                """
-                if not self.is_current_logged_in():
-                    return SimpleErrorResponse(
-                        401, "El socio no tiene una sesión iniciada"
-                    )
-
-                if not call_with_current_associate:
-                    return func(*args, **kwargs)
-
-                return func(self.current_user(), *args, **kwargs)
-
-            return wrapper
-
-        return decorator
-    
-    # Fin nuevo
     
     def permission_required(self, permit_name, login_required=True, call_with_current_user=False):
         """Verifica si el usuario está logueado y tiene un permiso.
