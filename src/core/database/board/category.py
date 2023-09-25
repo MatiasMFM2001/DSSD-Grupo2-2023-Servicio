@@ -3,11 +3,10 @@ from src.core.database.resource_managers.physical_resource_manager import (
     PhysicalResourceManager,
 )
 
-
-class Permission(db.Model):
-    __tablename__ = "permissions"
+class Category(db.Model):
+    __tablename__ = "category"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(255), nullable=False)
 
     @staticmethod
     def resource_manager():
@@ -16,4 +15,4 @@ class Permission(db.Model):
         Returns:
             PhysicalResourceManager: Resource manager para este modelo.
         """
-        return PhysicalResourceManager(db.session, Permission)
+        return PhysicalResourceManager(db.session, Category)

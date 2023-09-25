@@ -3,10 +3,8 @@ from src.core.database.db_instance import db
 import src.core.database.custom_drop_table
 from datetime import date
 
-from src.core.database.auth import Permission, Role, User
-
 from src.core.database.auth import *
-
+from src.core.database.board import *
 
 def init_app(app):
     """
