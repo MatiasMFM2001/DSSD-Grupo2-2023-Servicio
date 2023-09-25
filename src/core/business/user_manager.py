@@ -90,24 +90,6 @@ class UserManager(AccountManager):
             query = query.filter(User.active == active)
         return query
 
-    def current_id(self):
-        return session.get("id")
-
-    def current_user(self):
-        """Obtiene el usuario actual.
-
-        Returns:
-            User: Usuario actual.
-        """
-        if not "id" in session:
-            return None
-
-        user_id = self.current_id()
-
-        if not self.database.exists(user_id):
-            return None
-
-        return self.get(user_id)
 
     def validate(self, **kwargs):
         super().validate(**kwargs)

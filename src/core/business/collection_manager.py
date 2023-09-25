@@ -5,5 +5,5 @@ from src.core.business.crud_manager import CRUDManager
 #colection manager hereda de crud manager para que asi pueda guardad cosas en la BD
 class CollectionManager(CRUDManager):
     def __init__(self):
-        """Constructor de la clase UserManager."""
+        """Constructor de la clase CollectionManager."""
         super().__init__(Collection)
