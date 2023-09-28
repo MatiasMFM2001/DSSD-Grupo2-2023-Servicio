@@ -2,11 +2,13 @@ from src.core.business.account_manager import AccountManager
 from src.core.database.auth import User
 from src.api.helpers.jwt_helpers import try_decode, encode
 from src.api.helpers.api_responses import SimpleErrorResponse
+from src.core.database.auth import Permission
 from flask import request
 import functools
 import re
 from typing import Optional
 
+permission_rm = Permission.resource_manager()
 
 """Capa de negocio de alto nivel, para la tabla de Usuarios de la BD, donde se requiere hacer CRUDs sobre sus tuplas."""
 class UserManager(AccountManager):
@@ -115,7 +117,8 @@ class UserManager(AccountManager):
         Returns:
             dict: diccionario de nombres de los permisos que tiene el usuario actual.
         """
-        return [print(perm) for perm in self.database.get_permissions(user_id).all()]
+        user_query = self.database.get_permissions(user_id)
+        return permission_rm.query().select_from(user_query).all()
 
 
 """Capa de negocio de alto nivel, para la tabla de Usuarios de la BD, donde se requiere hacer CRUDs sobre sus tuplas, y manejar autenticación, sesiones y permisos."""
