@@ -17,6 +17,9 @@ class UserResourceManager(AccountResourceManager):
 
         return roles.join(Role.permissions)
 
+    def get_permission_names(self, user_id):
+        return self.dbs.query(Permission.name).select_from(self.model_class).where(self.model_class.id == user_id).join(self.model_class.roles).join(Role.permissions)
+    
     def has_role(self, user_id, role_name):
         if user_id is None:
             return role_name == "No autenticado"
