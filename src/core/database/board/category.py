@@ -16,3 +16,6 @@ class Category(db.Model):
             PhysicalResourceManager: Resource manager para este modelo.
         """
         return PhysicalResourceManager(db.session, Category)
+    
+    def get_json(self):
+        return {"name": self.name, "id": self.id}

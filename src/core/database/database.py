@@ -101,12 +101,12 @@ def initializate_prod_db():
     action_modules = {
         "login": ["private"],
         "logout": ["private"],
-        "list": ["user", "associate", "discipline", "payment"],
+        "list": ["user", "associate", "discipline", "payment", "category"],
         "show": ["associate", "discipline", "home"],
-        "update": ["config", "user", "associate", "discipline", "payment"],
+        "update": ["config", "user", "associate", "discipline", "payment", "category"],
         "export": ["associate", "payment"],
-        "create": ["user", "associate", "discipline", "payment"],
-        "destroy": ["user", "associate", "discipline", "payment"],
+        "create": ["user", "associate", "discipline", "payment", "category"],
+        "destroy": ["user", "associate", "discipline", "payment", "category"],
         "inscribe_discipline": ["associate"],
         "unscribe_discipline": ["associate"],
     }

@@ -12,6 +12,15 @@ class CRUDManager(BusinessManager):
         """
         super().__init__(table)
 
+    @property
+    def rows_per_page(self):
+        """Obtiene la cantidad de filas por página.
+
+        Returns:
+            int: Cantidad de filas por página.
+        """
+        return 20
+        
     def validate(self, **kwargs):
         pass
 
