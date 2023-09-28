@@ -115,10 +115,9 @@ class UserManager(AccountManager):
         """Obtiene los nombres de los permisos de un usuario.
 
         Returns:
-            dict: diccionario de nombres de los permisos que tiene el usuario actual.
+            list: lista de nombres de los permisos que tiene el usuario actual.
         """
-        user_query = self.database.get_permissions(user_id)
-        return permission_rm.query().select_from(user_query).all()
+        return self.database.get_permission_names(user_id).all()
 
 
 """Capa de negocio de alto nivel, para la tabla de Usuarios de la BD, donde se requiere hacer CRUDs sobre sus tuplas, y manejar autenticación, sesiones y permisos."""
