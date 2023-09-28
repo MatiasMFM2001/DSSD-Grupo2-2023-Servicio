@@ -108,6 +108,14 @@ class UserManager(AccountManager):
                 and (search.id != id)
             ):
                 raise ValueError(f"El usuario {search.username} ya esta en uso.")
+    
+    def get_current_user_permissions(self, user_id):
+        """Obtiene los nombres de los permisos de un usuario.
+
+        Returns:
+            dict: diccionario de nombres de los permisos que tiene el usuario actual.
+        """
+        return [print(perm) for perm in self.database.get_permissions(user_id).all()]
 
 
 """Capa de negocio de alto nivel, para la tabla de Usuarios de la BD, donde se requiere hacer CRUDs sobre sus tuplas, y manejar autenticación, sesiones y permisos."""

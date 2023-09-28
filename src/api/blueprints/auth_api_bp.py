@@ -15,13 +15,19 @@ def login():
     if error:
         return error
 
-    associate = auth_m.login(values["email"], values["password"])
+    user = auth_m.login(values["email"], values["password"])
 
-    if associate is None:
+    if user is None:
         return SimpleErrorResponse(401, "Credenciales inválidas")
 
-    token = auth_m.token_of(associate)
-    return SimpleOKResponse("La sesión ha sido iniciada correctamente", token=token)
+    #permissions = {[perm.name for perm in auth_m.get_current_user_permissions(user.id)]}
+
+    display_data = {"first_name" : user.first_name,
+                    "last_name" : user.last_name,
+                    "roles" : [rol.name for rol in user.roles]}
+    
+    token = auth_m.token_of(user)
+    return SimpleOKResponse("La sesión ha sido iniciada correctamente", token=token, display_data=display_data)
 
 
 @auth_api_bp.route("/me/editar_perfil", methods=["POST"])
