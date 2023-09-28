@@ -2,7 +2,7 @@ from flask import Blueprint, request
 
 from src.core.business.category_manager import CategoryManager
 
-from src.api.helpers import paginator_to_json
+from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
 from src.service.helpers.controller_helpers import get_int
 from src.core.business.user_manager import auth_m
@@ -27,6 +27,7 @@ def categories_of_club():
         categories = paginator_to_json(
             categories_m.get_categories_paginator(page_number)
         )
+        print(categories)
         return SimpleOKResponse(categories=categories)
     except HTTPException:
         return SimpleErrorResponse(404, f"La página {page_number} no existe")
@@ -40,4 +41,13 @@ def create_category():
         return error
 
     categories_m.create(**values)
-    return SimpleOKResponse("Tu contraseña ha sido actualizada correctamente")
+    return SimpleOKResponse("Categoría creada correctamente")
+
+@category_api_bp.route("/all", methods=["GET"])
+@auth_m.permission_required("category_list")
+def all_categories():
+    """Obtiene todas las categorias que se realizan en el club."""
+
+    categories = to_json(categories_m.filter_get_list())
+    
+    return SimpleOKResponse(categories=categories)

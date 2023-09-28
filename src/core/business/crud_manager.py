@@ -168,7 +168,7 @@ class CRUDManager(BusinessManager):
         Returns:
             list: Lista de elementos de la base de datos.
         """
-        return self.get_all(self.filter(*args))
+        return self.get_list(self.filter(*args))
 
     def exists(self, id, include_inactive=False):
         query = self.database.query_for(id, include_inactive)
