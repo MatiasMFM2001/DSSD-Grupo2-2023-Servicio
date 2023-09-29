@@ -20,3 +20,12 @@ class Collection(db.Model):
             PhysicalResourceManager: Resource manager para este modelo.
         """
         return PhysicalResourceManager(db.session, Collection)
+    
+    def get_json(self):
+        return {
+            "name": self.name,
+            "id": self.id,
+            "initial_fabrication_term": self.initial_fabrication_term,
+            "final_fabrication_term": self.final_fabrication_term,
+            "estimated_launch_date": self.estimated_launch_date
+        }
