@@ -91,7 +91,6 @@ def get_int(request_args, key, error_raiser, int_meaning):
         )
 
     value = request_args.get(key)
-    print(value)
 
     if not is_integer(value):
         return (

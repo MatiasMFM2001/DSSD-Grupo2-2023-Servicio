@@ -27,7 +27,7 @@ def categories_of_club():
         categories = paginator_to_json(
             categories_m.get_categories_paginator(page_number)
         )
-        print(categories)
+        
         return SimpleOKResponse(categories=categories)
     except HTTPException:
         return SimpleErrorResponse(404, f"La página {page_number} no existe")
