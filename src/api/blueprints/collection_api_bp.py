@@ -25,7 +25,7 @@ def collections_of_club():
 
     try:
         collections = paginator_to_json(
-            collections_m.get_collections_paginator(page_number)
+            collections_m.filter_by_get_paginator(page_number)
         )
         return SimpleOKResponse(collections=collections)
     except HTTPException:

@@ -25,7 +25,7 @@ def categories_of_club():
 
     try:
         categories = paginator_to_json(
-            categories_m.get_categories_paginator(page_number)
+            categories_m.filter_by_get_paginator(page_number)
         )
         
         return SimpleOKResponse(categories=categories)

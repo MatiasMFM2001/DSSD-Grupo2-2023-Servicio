@@ -8,7 +8,3 @@ class CollectionManager(CRUDManager):
         """Constructor de la clase CollectionManager."""
         super().__init__(Collection)
     
-    def get_collections_paginator(self, page):
-        return self.get_paginator(
-            self.database.query(), page
-        )

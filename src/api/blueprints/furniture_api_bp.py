@@ -25,7 +25,7 @@ def furnitures_of_club():
 
     try:
         furnitures = paginator_to_json(
-            furnitures_m.get_furnitures_paginator(page_number)
+            furnitures_m.filter_by_get_paginator(page_number)
         )
         return SimpleOKResponse(furnitures=furnitures)
     except HTTPException:
