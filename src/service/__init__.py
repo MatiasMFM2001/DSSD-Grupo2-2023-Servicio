@@ -51,6 +51,14 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
         database.initializate_prod_db()
         return "Inicializado!"
 
+    @app.cli.command(name="reset_and_initialize_db")
+    @app.route("/db/reset_and_initialize")
+    def reset_and_initialize_db():
+        """Resetea e inicializa la base de datos."""
+        database.reset_db()
+        database.initializate_prod_db()
+        return "Hecho!"
+    
     app.jinja_env.globals.update(generate_url=controller_helpers.generate_url)
 
     app.register_blueprint(root_api_bp)
