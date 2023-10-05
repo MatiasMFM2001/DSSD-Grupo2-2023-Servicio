@@ -27,7 +27,7 @@ def login():
                     "roles" : [rol.name for rol in user.roles]}
     
     token = auth_m.token_of(user)
-    return SimpleOKResponse("La sesión ha sido iniciada correctamente", token=token, display_data=display_data, permissions=permissions)
+    return SimpleOKResponse("La sesión ha sido iniciada correctamente", token=token, display_data=display_data, permissions=permissions, username=(user.first_name + "." + user.first_name))
 
 
 @auth_api_bp.route("/me/editar_perfil", methods=["POST"])
