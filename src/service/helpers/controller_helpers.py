@@ -1,7 +1,7 @@
 from xml.etree.ElementInclude import include
 from flask import Response, abort, request
 from urllib.parse import urlencode
-#from src.api.helpers.api_responses import SimpleErrorResponse
+from src.api.helpers.api_responses import SimpleErrorResponse
 from io import BytesIO
 import re
 
@@ -147,7 +147,7 @@ def validate_id(
 
     return result[0]
 
-'''
+
 def api_validate_id(
     manager, request_args, include_inactive=False, key="id", tuple_name="La tupla"
 ):
@@ -167,6 +167,8 @@ def internal_validate_file(request_files, field_name, allowed_mimes, error_raise
         )
 
     buffer = BytesIO(request.files[field_name].read())
+   
+    '''
     file_mime = magic.from_buffer(buffer.read(), mime=True)
 
     if not file_mime in allowed_mimes:
@@ -177,8 +179,9 @@ def internal_validate_file(request_files, field_name, allowed_mimes, error_raise
                 f"El archivo '{field_name}' es de tipo '{file_mime}', en lugar de: {allowed_mimes}",
             ),
         )
+    '''
 
-    return (buffer, file_mime, None)
+    return (buffer, "", None)
 
 
 def validate_file(
@@ -197,4 +200,4 @@ def validate_file(
 def api_validate_file(request_files, field_name, allowed_mimes):
     return internal_validate_file(
         request_files, field_name, allowed_mimes, SimpleErrorResponse
-    )'''
+    )
