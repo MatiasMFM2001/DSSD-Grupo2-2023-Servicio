@@ -41,7 +41,7 @@ def collection_by_id():
     if error:
         return error
 
-    return SimpleOKResponse(furniture=collection.get_json())
+    return SimpleOKResponse(collection=collection.get_json())
     
 @collection_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("collection_create")
