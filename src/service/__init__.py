@@ -6,6 +6,8 @@ from src.core.database import database
 from src.api.blueprints.root_api_bp import root_api_bp
 from src.service.helpers import controller_helpers
 from flask_cors import CORS
+from werkzeug.exceptions import HTTPException
+from src.api.helpers.api_responses import SimpleErrorResponse
 
 
 def create_app(static_folder: str = "static", env: str = "development") -> Flask:
@@ -58,6 +60,20 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
         database.reset_db()
         database.initializate_prod_db()
         return "Hecho!"
+    
+    @app.errorhandler(HTTPException)
+    def handle_exception(exception):
+        """Return JSON instead of HTML for HTTP errors."""
+        return SimpleErrorResponse(exception.code, name=exception.name, description=exception.description)
+    
+    @app.errorhandler(ValueError)
+    def handle_error(exception):
+        return SimpleErrorResponse(400, str(exception))
+    
+    @app.errorhandler(Exception)
+    def handle_error(exception):
+        response = exception.get_response()
+        return SimpleErrorResponse(500, str(exception))
     
     app.jinja_env.globals.update(generate_url=controller_helpers.generate_url)
 
