@@ -23,13 +23,18 @@ def furnitures_of_club():
     """Obtiene todos los muebles de la colección."""
 
     page_number, error = get_int(request.args, "page", SimpleErrorResponse, "página")
-
+    print(page_number)
     if error:
         return error
 
+    collection, error = api_validate_id(collection_m, request.args, tuple_name="La colección", key="collection_id")
+
+    if error:
+        return error
+    
     try:
         furnitures = paginator_to_json(
-            furnitures_m.filter_by_get_paginator(page_number)
+            furnitures_m.filter_by_get_paginator(page_number, collection=collection)
         )
         return SimpleOKResponse(furnitures=furnitures)
     except HTTPException:
