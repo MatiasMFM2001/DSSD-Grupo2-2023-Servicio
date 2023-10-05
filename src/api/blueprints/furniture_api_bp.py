@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 
 from src.core.business.furniture_manager import FurnitureManager
+from src.core.business.collection_manager import CollectionManager
 
 from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
@@ -11,6 +12,7 @@ from werkzeug.exceptions import HTTPException
 
 furniture_api_bp = Blueprint("furniture_api_bp", __name__, url_prefix="/furnitures")
 furnitures_m = FurnitureManager()
+collection_m = CollectionManager()
 
 
 @furniture_api_bp.route("/list", methods=["GET"])
@@ -34,12 +36,15 @@ def furnitures_of_club():
 @furniture_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("furniture_create")
 def create_furniture():
-    values, error = get_json({"name", "initial_fabrication_term", "final_fabrication_term", "estimated_launch_date"})
+    values, error = get_json({"name", "description", "file_extension", "collection_id", "categories"})
 
     if error:
         return error
-
-    furniture = furnitures_m.create(**values)
+    print(values["collection_id"])
+    print(type(values["collection_id"]))
+    collection = collection_m.get(int(values["collection_id"]))
+    del values["collection_id"]
+    furniture = furnitures_m.create(**values, collection=collection)
     return SimpleOKResponse("Colección creada correctamente", furniture_id=furniture.id)
 
 @furniture_api_bp.route("/all", methods=["GET"])

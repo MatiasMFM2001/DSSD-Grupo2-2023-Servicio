@@ -71,7 +71,7 @@ class PhysicalResourceManager:
 
         return created
 
-    def get(self, id):
+    def get(self, id, include_inactives=False):
         """Retorna una instancia de este modelo con el identificador dado.
 
         Args:
