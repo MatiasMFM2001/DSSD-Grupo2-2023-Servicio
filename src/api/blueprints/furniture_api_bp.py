@@ -2,6 +2,7 @@ from flask import Blueprint, request
 
 from src.core.business.furniture_manager import FurnitureManager
 from src.core.business.collection_manager import CollectionManager
+from src.core.business.category_manager import CategoryManager
 
 from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
@@ -13,6 +14,7 @@ from werkzeug.exceptions import HTTPException
 furniture_api_bp = Blueprint("furniture_api_bp", __name__, url_prefix="/furnitures")
 furnitures_m = FurnitureManager()
 collection_m = CollectionManager()
+categories_m = CategoryManager()
 
 
 @furniture_api_bp.route("/list", methods=["GET"])
@@ -40,11 +42,16 @@ def create_furniture():
 
     if error:
         return error
-    print(values["collection_id"])
-    print(type(values["collection_id"]))
+    
+    if not values["collection_id"]:
+        return SimpleErrorResponse(400, "El atributo collection_id está vacío")
+    
     collection = collection_m.get(int(values["collection_id"]))
+    
     del values["collection_id"]
-    furniture = furnitures_m.create(**values, collection=collection)
+    values["categories"] = [categories_m.get(id) for id in values["categories"]]
+    
+    furniture = furnitures_m.create(collection=collection, **values)
     return SimpleOKResponse("Colección creada correctamente", furniture_id=furniture.id)
 
 @furniture_api_bp.route("/all", methods=["GET"])
