@@ -28,8 +28,8 @@ class Collection(db.Model):
             "name": self.name,
             "id": self.id,
             "bonita_process_id": self.bonita_process_id,
-            "initial_fabrication_term": self.initial_fabrication_term,
-            "final_fabrication_term": self.final_fabrication_term,
-            "estimated_launch_date": self.estimated_launch_date,
+            "initial_fabrication_term": self.initial_fabrication_term.strftime("%d/%m/%Y"),
+            "final_fabrication_term": self.final_fabrication_term.strftime("%d/%m/%Y"),
+            "estimated_launch_date": self.estimated_launch_date.strftime("%d/%m/%Y"),
             "bd_or_drive": self.bd_or_drive
         }
