@@ -8,3 +8,12 @@ class CollectionManager(CRUDManager):
         """Constructor de la clase CollectionManager."""
         super().__init__(Collection)
     
+    def validate(self, **kwargs):
+        name = kwargs.get("name")
+        
+        if name is not None:
+            search = self.database.filter_by(name=name).first()
+            if (search is not None) and (search.name == name):
+                raise ValueError(f"El nombre de colección '{name}' ya está en uso.")
+        
+        
