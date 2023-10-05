@@ -50,8 +50,8 @@ def furniture_by_id():
 @furniture_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("furniture_create")
 def create_furniture():
-    values, error = get_json({"name", "description", "file_extension", "collection_id", "categories"})
-
+    values, error = get_json({"name", "description", "image", "collection_id", "categories", "image"})
+    
     if error:
         return error
     
@@ -62,6 +62,7 @@ def create_furniture():
     
     del values["collection_id"]
     values["categories"] = [categories_m.get(id) for id in values["categories"]]
+    del values["image"]
     
     furniture = furnitures_m.create(collection=collection, **values)
     return SimpleOKResponse("Colección creada correctamente", furniture_id=furniture.id)
