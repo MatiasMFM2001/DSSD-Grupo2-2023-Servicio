@@ -31,7 +31,7 @@ def collections_of_club():
     except HTTPException:
         return SimpleErrorResponse(404, f"La página {page_number} no existe")
 
-@furniture_api_bp.route("/get", methods=["GET"])
+@collection_api_bp.route("/get", methods=["GET"])
 @auth_m.permission_required("collection_show")
 def collection_by_id():
     """Obtiene una colección por ID."""
