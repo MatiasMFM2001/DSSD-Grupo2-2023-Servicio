@@ -6,10 +6,12 @@ from src.core.database.resource_managers.physical_resource_manager import (
 class Collection(db.Model):
     __tablename__ = "collection"
     id = db.Column(db.Integer, primary_key=True) #colección
+    bonita_process_id = db.Column(db.Integer) #id de la instancia del proceso de bonita de cada colección
     name = db.Column(db.String(255), nullable=False)
     initial_fabrication_term = db.Column(db.DateTime(), nullable=False)
     final_fabrication_term = db.Column(db.DateTime(), nullable=False)
     estimated_launch_date = db.Column(db.DateTime(), nullable=False)
+    bd_or_drive = db.Column(db.String(2), nullable=False, default='bd')
     furnitures = db.relationship("Furniture", back_populates="collection") # ?
 
     @staticmethod
@@ -25,7 +27,9 @@ class Collection(db.Model):
         return {
             "name": self.name,
             "id": self.id,
+            "bonita_process_id": self.bonita_process_id,
             "initial_fabrication_term": self.initial_fabrication_term,
             "final_fabrication_term": self.final_fabrication_term,
-            "estimated_launch_date": self.estimated_launch_date
+            "estimated_launch_date": self.estimated_launch_date,
+            "bd_or_drive": self.bd_or_drive
         }
