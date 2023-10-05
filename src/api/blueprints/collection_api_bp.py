@@ -34,7 +34,7 @@ def collections_of_club():
 @collection_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("collection_create")
 def create_collection():
-    values, error = get_json({"name", "initial_fabrication_term", "final_fabrication_term", "estimated_launch_date", "bonita_process_id"})
+    values, error = get_json({"name", "initial_fabrication_term", "final_fabrication_term", "estimated_launch_date", "bonita_process_id", "bd_or_drive"})
 
     if error:
         return error
