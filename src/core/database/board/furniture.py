@@ -37,3 +37,10 @@ class Furniture(db.Model):
     def absolute_path(self, file_extension=None):
         root_path = os.path.dirname(current_app.instance_path)
         return os.path.join(root_path, self.relative_path(file_extension))
+    
+    def get_json(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "categories": [category.get_json() for category in self.categories]
+        }
