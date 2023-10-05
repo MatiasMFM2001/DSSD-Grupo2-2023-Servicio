@@ -50,8 +50,8 @@ def furniture_by_id():
 @furniture_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("furniture_create")
 def create_furniture():
-    values, error = get_json({"name", "description", "file_extension", "collection_id", "categories"})
-
+    values, error = get_json({"name", "description", "image", "collection_id", "categories", "image"})
+    print(values)
     if error:
         return error
     
