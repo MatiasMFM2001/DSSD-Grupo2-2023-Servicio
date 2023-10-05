@@ -6,7 +6,7 @@ from src.core.business.category_manager import CategoryManager
 
 from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
-from src.service.helpers.controller_helpers import get_int
+from src.service.helpers.controller_helpers import get_int, api_validate_id
 from src.core.business.user_manager import auth_m
 from src.api.helpers.api_requests import get_json
 from werkzeug.exceptions import HTTPException
@@ -34,6 +34,18 @@ def furnitures_of_club():
         return SimpleOKResponse(furnitures=furnitures)
     except HTTPException:
         return SimpleErrorResponse(404, f"La página {page_number} no existe")
+
+@furniture_api_bp.route("/get", methods=["GET"])
+@auth_m.permission_required("furniture_show")
+def furniture_by_id():
+    """Obtiene todos los muebles de la colección."""
+
+    furniture, error = api_validate_id(furnitures_m, request.args, tuple_name="El mueble")
+
+    if error:
+        return error
+
+    return SimpleOKResponse(furniture=furniture.get_json())
 
 @furniture_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("furniture_create")

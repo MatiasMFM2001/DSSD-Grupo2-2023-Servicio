@@ -101,14 +101,12 @@ def initializate_prod_db():
     action_modules = {
         "login": ["private"],
         "logout": ["private"],
-        "list": ["user", "associate", "discipline", "payment", "category", "collection", "furniture"],
-        "show": ["associate", "discipline", "home"],
-        "update": ["config", "user", "associate", "discipline", "payment", "category", "collection", "furniture"],
+        "list": ["user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
+        "show": ["associate", "discipline", "home", "furniture_file", "collection", "furniture"],
+        "update": ["config", "user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
         "export": ["associate", "payment"],
-        "create": ["user", "associate", "discipline", "payment", "category", "collection", "furniture"],
-        "destroy": ["user", "associate", "discipline", "payment", "category", "collection", "furniture"],
-        "inscribe_discipline": ["associate"],
-        "unscribe_discipline": ["associate"],
+        "create": ["user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
+        "destroy": ["user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
     }
 
     name_permissions = {}
