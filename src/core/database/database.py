@@ -46,6 +46,7 @@ def reset_db():
 permission_rm = Permission.resource_manager()
 role_rm = Role.resource_manager()
 user_rm = User.resource_manager()
+categ_rm = Category.resource_manager()
 
 
 def populate_db():
@@ -163,5 +164,8 @@ def initializate_prod_db():
         last_name="Numero 1",
         roles=[role_operator],
     )
+
+    # Category
+    category = categ_rm.create(name="Palmeiras New York Enano")
 
     print("Finished initializing BD")
