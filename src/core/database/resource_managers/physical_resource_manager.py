@@ -36,7 +36,7 @@ class PhysicalResourceManager:
         """
         return self.query().filter_by(**kwargs)
 
-    def query_for(self, id):
+    def query_for(self, id, include_inactives=False):
         """Retorna la query para obtener una instancia de este modelo con el identificador dado.
 
         Args:
