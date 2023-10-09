@@ -62,3 +62,18 @@ def all_collections():
     collections = to_json(collections_m.filter_get_list())
     
     return SimpleOKResponse(collections=collections)
+
+@collection_api_bp.route("/end", methods=["POST"])
+@auth_m.permission_required("collection_end")
+def collection_end():
+    collection, error = api_validate_id(collections_m, request.args, tuple_name="El mueble")
+
+    if error:
+        return error
+    
+    if not collection.editable:
+        return SimpleErrorResponse(400, "La colección no es editable")
+    
+    collections_m.update(collection.id, editable=False)
+    
+    return SimpleOKResponse(collection=collection.get_json())

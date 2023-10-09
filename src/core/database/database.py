@@ -108,6 +108,7 @@ def initializate_prod_db():
         "export": ["associate", "payment"],
         "create": ["user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
         "destroy": ["user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
+        "end": ["collection"],
     }
 
     name_permissions = {}

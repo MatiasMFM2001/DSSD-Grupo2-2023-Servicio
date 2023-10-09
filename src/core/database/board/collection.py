@@ -12,6 +12,7 @@ class Collection(db.Model):
     final_fabrication_term = db.Column(db.DateTime(), nullable=False)
     estimated_launch_date = db.Column(db.DateTime(), nullable=False)
     bd_or_drive = db.Column(db.String(2), nullable=False, default='bd')
+    editable = db.Column(db.Boolean, default=True)
     furnitures = db.relationship("Furniture", back_populates="collection") # ?
 
     @staticmethod
