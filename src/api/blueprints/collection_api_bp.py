@@ -66,6 +66,7 @@ def all_collections():
 @collection_api_bp.route("/end", methods=["POST"])
 @auth_m.permission_required("collection_end")
 def collection_end():
+    #collection_id = request.args.get('id_c', type=int)
     collection, error = api_validate_id(collections_m, request.args, tuple_name="El mueble")
 
     if error:
@@ -75,5 +76,6 @@ def collection_end():
         return SimpleErrorResponse(400, "La colección no es editable")
     
     collections_m.update(collection.id, editable=False)
+    print('updated')
     
     return SimpleOKResponse(collection=collection.get_json())
