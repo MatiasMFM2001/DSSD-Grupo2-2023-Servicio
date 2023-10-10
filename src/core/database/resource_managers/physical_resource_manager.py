@@ -133,7 +133,7 @@ class PhysicalResourceManager:
         """
         self.update_each(self.query_for(id), **kwargs)
 
-    def remove(self, include_inactives=False, id):
+    def remove(self, id, include_inactives=False):
         """Elimina una instancia de este modelo con el identificador dado.
 
         Args:
