@@ -125,7 +125,7 @@ class PhysicalResourceManager:
 
         return query.first() is not None
 
-    def update(self, id, **kwargs):
+    def update(self, id, include_inactives=False, **kwargs):
         """Actualiza una instancia de este modelo con el identificador dado.
 
         Args:
@@ -133,7 +133,7 @@ class PhysicalResourceManager:
         """
         self.update_each(self.query_for(id), **kwargs)
 
-    def remove(self, id):
+    def remove(self, include_inactives=False, id):
         """Elimina una instancia de este modelo con el identificador dado.
 
         Args:
