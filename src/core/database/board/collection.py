@@ -32,5 +32,6 @@ class Collection(db.Model):
             "initial_fabrication_term": self.initial_fabrication_term.strftime("%d/%m/%Y"),
             "final_fabrication_term": self.final_fabrication_term.strftime("%d/%m/%Y"),
             "estimated_launch_date": self.estimated_launch_date.strftime("%d/%m/%Y"),
-            "bd_or_drive": self.bd_or_drive
+            "bd_or_drive": self.bd_or_drive,
+            "editable": self.editable
         }
