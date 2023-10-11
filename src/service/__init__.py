@@ -64,7 +64,7 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
     @app.errorhandler(HTTPException)
     def handle_exception(exception):
         """Return JSON instead of HTML for HTTP errors."""
-        return SimpleErrorResponse(exception.code, name=exception.name, description=exception.description)
+        return SimpleErrorResponse(exception.code, exception.description)
     
     @app.errorhandler(ValueError)
     def handle_error(exception):
