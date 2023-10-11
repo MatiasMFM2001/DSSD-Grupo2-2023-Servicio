@@ -67,7 +67,7 @@ def all_collections():
 @auth_m.permission_required("collection_end")
 def collection_end():
     #collection_id = request.args.get('id_c', type=int)
-    collection, error = api_validate_id(collections_m, request.args, tuple_name="El mueble")
+    collection, error = api_validate_id(collections_m, request.args, tuple_name="La colección")
 
     if error:
         return error

@@ -23,7 +23,7 @@ def furnitures_of_club():
     """Obtiene todos los muebles de la colección."""
 
     page_number, error = get_int(request.args, "page", SimpleErrorResponse, "página")
-    print(page_number)
+    
     if error:
         return error
 
