@@ -72,7 +72,6 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
     
     @app.errorhandler(Exception)
     def handle_error(exception):
-        response = exception.get_response()
         return SimpleErrorResponse(500, str(exception))
     
     app.jinja_env.globals.update(generate_url=controller_helpers.generate_url)
