@@ -107,9 +107,9 @@ def initializate_prod_db():
         
         "list": ["user", "category", "collection", "furniture", "furniture_file", "batch", "furniture_material"],
         "show": ["home", "furniture_file", "collection", "furniture", "batch", "furniture_material"],
-        "update": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material"],
-        "create": ["user", "category", "collection", "furniture", "furniture_file"],
-        "destroy": ["user", "category", "collection", "furniture", "furniture_file"],
+        #"update": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material"],
+        "create": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material"],
+        #"destroy": ["user", "category", "collection", "furniture", "furniture_file"],
         
         "end": ["collection"],
         "sell": ["batch"],
@@ -155,9 +155,22 @@ def initializate_prod_db():
         ],
     }
     
+    extra_permissions = {
+        commercial_role: [
+            "collection_list",
+            "collection_show",
+            
+            "furniture_list",
+            "furniture_show",
+        ],
+    }
+    
     for role in [creative_role, operational_role, commercial_role]:
         role.permissions.append(name_permissions["private_logout"])
 
+    for role, permissions in extra_permissions.items():
+        role_has_permissions[role].extend(permissions)
+    
     for role, permissions in role_has_permissions.items():
         for permission in permissions:
             role.permissions.append(name_permissions[permission])
