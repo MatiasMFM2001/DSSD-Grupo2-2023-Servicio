@@ -2,6 +2,7 @@ from re import A
 from src.core.database.db_instance import db
 import src.core.database.custom_drop_table
 from datetime import date
+import re
 
 from src.core.database.auth import *
 from src.core.database.board import *
@@ -97,18 +98,22 @@ def initializate_prod_db():
     db.create_all()
     print("Finished resetting BD")
 
-   
+    
+
     # Permissions
     action_modules = {
         "login": ["private"],
         "logout": ["private"],
-        "list": ["user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
-        "show": ["associate", "discipline", "home", "furniture_file", "collection", "furniture"],
-        "update": ["config", "user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
-        "export": ["associate", "payment"],
-        "create": ["user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
-        "destroy": ["user", "associate", "discipline", "payment", "category", "collection", "furniture", "furniture_file"],
+        
+        "list": ["user", "category", "collection", "furniture", "furniture_file", "batch", "furniture_material"],
+        "show": ["home", "furniture_file", "collection", "furniture", "batch", "furniture_material"],
+        "update": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material"],
+        "create": ["user", "category", "collection", "furniture", "furniture_file"],
+        "destroy": ["user", "category", "collection", "furniture", "furniture_file"],
+        
         "end": ["collection"],
+        "sell": ["batch"],
+        "receive": ["batch"],
     }
 
     name_permissions = {}
@@ -119,52 +124,91 @@ def initializate_prod_db():
             name_permissions[role_name] = permission_rm.create(name=role_name)
 
     # Roles and its permissions
-    role_admin = role_rm.create(name="Administrador")
-    role_operator = role_rm.create(name="Operador")
     null_role = role_rm.create(name="No autenticado")
+    admin_role = role_rm.create(name="Administrador")
+    
+    creative_role = role_rm.create(name="Área Creativa")
+    operational_role = role_rm.create(name="Área Operativa")
+    commercial_role = role_rm.create(name="Área Comercial")
 
-    operator_has_not_permissions = {
-        "private_login",
-        "config_update",
-        "user_list",
-        "user_create",
-        "user_update",
-        "user_destroy",
-        "associate_create",
-    }
-
+    creative_regex = re.compile(r"^(category)|(collection)|(furniture)_[^_]+$")
+    operational_regex = re.compile(r"^(furniture_material)_[^_]+")
+    commercial_regex = re.compile(r"^(batch)_[^_]+")
+    
     role_has_permissions = {
-        role_admin: name_permissions.keys() - {"private_login"},
+        admin_role: name_permissions.keys() - {"private_login"},
         null_role: ["private_login"],
-        role_operator: [
-            p
-            for p in name_permissions.keys()
-            if not "destroy" in p and p not in operator_has_not_permissions
+        
+        creative_role: [
+            name for name in name_permissions.keys()
+            if creative_regex.match(name)
+        ],
+        
+        operational_role: [
+            name for name in name_permissions.keys()
+            if operational_regex.match(name)
+        ],
+        
+        commercial_role: [
+            name for name in name_permissions.keys()
+            if commercial_regex.match(name)
         ],
     }
+    
+    for role in [creative_role, operational_role, commercial_role]:
+        role.permissions.append(name_permissions["private_logout"])
 
     for role, permissions in role_has_permissions.items():
         for permission in permissions:
             role.permissions.append(name_permissions[permission])
 
     # Users
-    admin = user_rm.create(
+    admin_1 = user_rm.create(
         email="admin@a.com",
         username="admin",
         password="1234",
         first_name="Admin",
         last_name="Numero 1",
-        roles=[role_admin],
+        roles=[admin_role],
+    )
+    
+    admin_2 = user_rm.create(
+        email="adm@a.com",
+        username="admin2",
+        password="1234",
+        first_name="Admin",
+        last_name="Numero 2",
+        roles=[admin_role],
+    )
+    
+    creative = user_rm.create(
+        email="cre@a.com",
+        username="creativo",
+        password="1234",
+        first_name="Creativo",
+        last_name="Numero 1",
+        roles=[creative_role],
+    )
+    
+    operational = user_rm.create(
+        email="ope@a.com",
+        username="operacional",
+        password="1234",
+        first_name="Operacional",
+        last_name="Numero 1",
+        roles=[operational_role],
+    )
+    
+    commercial = user_rm.create(
+        email="com@a.com",
+        username="comercial",
+        password="1234",
+        first_name="Comercial",
+        last_name="Numero 1",
+        roles=[commercial_role],
     )
 
-    operator = user_rm.create(
-        email="operador@a.com",
-        username="operador",
-        password="1234",
-        first_name="Operador",
-        last_name="Numero 1",
-        roles=[role_operator],
-    )
+    
 
     # Category
     category = categ_rm.create(name="Palmeiras New York Enano")
