@@ -105,10 +105,10 @@ def initializate_prod_db():
         "login": ["private"],
         "logout": ["private"],
         
-        "list": ["user", "category", "collection", "furniture", "furniture_file", "batch", "furniture_material"],
+        "list": ["user", "category", "collection", "furniture", "furniture_file", "batch", "furniture_material", "material"],
         "show": ["home", "furniture_file", "collection", "furniture", "batch", "furniture_material"],
         #"update": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material"],
-        "create": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material"],
+        "create": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material", "material"],
         #"destroy": ["user", "category", "collection", "furniture", "furniture_file"],
         
         "end": ["collection"],

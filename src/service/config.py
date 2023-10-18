@@ -28,8 +28,8 @@ class DevelopmentConfig(Config):
     SECRET_KEY = "fdkljdklghjdshlk"
     DEBUG = True
     DB_USER = environ.get("DB_USER", "postgres")
-    DB_PASS = environ.get("DB_PASS", "Fac0810")
-    DB_HOST = environ.get("DB_HOST", "db")
+    DB_PASS = environ.get("DB_PASS", "postgres")
+    DB_HOST = environ.get("DB_HOST", "localhost")
     DB_NAME = environ.get("DB_NAME", "club")
     DB_PORT = environ.get("DB_PORT", "5432")
     SQLALCHEMY_TRACK_MODIFICATIONS = True
