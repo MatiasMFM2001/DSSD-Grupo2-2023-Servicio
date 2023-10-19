@@ -48,6 +48,7 @@ permission_rm = Permission.resource_manager()
 role_rm = Role.resource_manager()
 user_rm = User.resource_manager()
 categ_rm = Category.resource_manager()
+material_rm = Material.resource_manager()
 
 
 def populate_db():
@@ -225,5 +226,10 @@ def initializate_prod_db():
 
     # Category
     category = categ_rm.create(name="Palmeiras New York Enano")
+
+    # Materiales
+    material1 = material_rm.create(name="Madera", price=465.2)
+    material2 = material_rm.create(name="Metal", price=1200.3)
+    materail3 = material_rm.create(name="Melamina", price=2015.9)
 
     print("Finished initializing BD")
