@@ -6,6 +6,7 @@ from src.core.database.enterprises.enterprise import Enterprise
 
 class Supplier(Enterprise):
     __tablename__ = "suppliers"
+    materials = db.relationship("Material", back_populates="supplier")
     
     @staticmethod
     def resource_manager():

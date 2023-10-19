@@ -3,13 +3,13 @@ from src.core.database.resource_managers.physical_resource_manager import (
     PhysicalResourceManager,
 )
 
-class Material(db.Model):
-    __tablename__ = "materials"
+class FabricationSlot(db.Model):
+    __tablename__ = "slots"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     
-    supplier_id = db.Column(db.Integer, db.ForeignKey("supplier.id"))
-    supplier = db.relationship("Supplier", back_populates="materials")
+    producer_id = db.Column(db.Integer, db.ForeignKey("producer.id"))
+    producer = db.relationship("Producer", back_populates="slots")
     
     @staticmethod
     def resource_manager():
@@ -18,6 +18,6 @@ class Material(db.Model):
         Returns:
             PhysicalResourceManager: Resource manager para este modelo.
         """
-        return PhysicalResourceManager(db.session, Material)
+        return PhysicalResourceManager(db.session, FabricationSlot)
     
     

@@ -6,7 +6,7 @@ from src.core.database.enterprises.enterprise import Enterprise
 
 class Producer(Enterprise):
     __tablename__ = "producers"
-    materials = db.relationship("Material", back_populates="producer")
+    slots = db.relationship("FabricationSlot", back_populates="producer")
     
     @staticmethod
     def resource_manager():
