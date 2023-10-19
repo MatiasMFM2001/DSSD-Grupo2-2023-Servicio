@@ -16,7 +16,7 @@ slots_m = SlotManager()
 @slot_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("slot_create")
 def create_slot():
-    values, error = get_json({"name", "price"})
+    values, error = get_json({"name", "beginning", "end"})
 
     if error:
         return error

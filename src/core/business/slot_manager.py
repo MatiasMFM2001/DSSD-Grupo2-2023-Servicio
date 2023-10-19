@@ -18,5 +18,5 @@ class SlotManager(CRUDManager):
         beginning = kwargs.get("beginning")
         end = kwargs.get("end")
 
-        if beginning is not None and end is not None and beginning <= end:
-            raise ValueError(f"La fecha de inicio no puede ser menor que la fecha final.")
+        if beginning is not None and end is not None and beginning >= end:
+            raise ValueError(f"La fecha de inicio no puede ser mayor que la fecha final.")
