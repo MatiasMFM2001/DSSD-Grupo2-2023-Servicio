@@ -33,7 +33,7 @@ def all_materials():
     
     return SimpleOKResponse(materials=materials)
 
-@collection_api_bp.route("/get", methods=["GET"])
+@material_api_bp.route("/get", methods=["GET"])
 @auth_m.permission_required("material_show")
 def material_by_id():
     """Obtiene un material según su ID."""
