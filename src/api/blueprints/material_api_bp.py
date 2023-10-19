@@ -27,8 +27,20 @@ def create_material():
 @material_api_bp.route("/all", methods=["GET"])
 @auth_m.permission_required("material_list")
 def all_materials():
-    """Obtiene todas las categorias que se realizan en el club."""
+    """Obtiene todos los materiales."""
 
     materials = to_json(materials_m.filter_get_list())
     
     return SimpleOKResponse(materials=materials)
+
+@collection_api_bp.route("/get", methods=["GET"])
+@auth_m.permission_required("material_show")
+def collection_by_id():
+    """Obtiene un material según su ID."""
+    
+    material, error = api_validate_id(materials_m, request.args, tuple_name="El material")
+
+    if error:
+        return error
+
+    return SimpleOKResponse(material=material.get_json())
