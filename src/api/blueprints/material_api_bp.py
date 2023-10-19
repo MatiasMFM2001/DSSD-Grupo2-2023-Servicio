@@ -35,7 +35,7 @@ def all_materials():
 
 @collection_api_bp.route("/get", methods=["GET"])
 @auth_m.permission_required("material_show")
-def collection_by_id():
+def material_by_id():
     """Obtiene un material según su ID."""
     
     material, error = api_validate_id(materials_m, request.args, tuple_name="El material")
