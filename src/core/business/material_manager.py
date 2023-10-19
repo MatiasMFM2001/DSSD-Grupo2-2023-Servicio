@@ -4,7 +4,7 @@ from src.core.business.crud_manager import CRUDManager
 
 class MaterialManager(CRUDManager):
     def __init__(self):
-        """Constructor de la clase CategoryManager."""
+        """Constructor de la clase MaterialManager."""
         super().__init__(Material)
     
     def validate(self, **kwargs):
