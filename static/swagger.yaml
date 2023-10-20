@@ -4,14 +4,14 @@ info:
   version: 1.0.0
   description: |-
 
-    En Global Furniture es una empresa que se dedica a fabricar muebles a través de materiales
+    Global Furniture es una empresa que se dedica a fabricar muebles a través de materiales
     sustentables y reciclados, desde madera a policarbonato o nylon reciclado. Nos enfocamos en 
     brindar siempre la mejor calidad de muebles ya sea con estilos modernos como vintage.
 
     _A continuación guardamos la metodología con la cual nos comunicamos con las APIS de terceros para poder lograr nuestros objetivos organizacionales_
     
 servers:
-  - url: http://localhost:5001
+  - url: {{url}}:{{port}}
 tags:
   - name: materials
     description: Todo lo necesario para pedir materiales

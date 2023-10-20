@@ -47,6 +47,9 @@ class DevelopmentConfig(Config):
 
     SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
     API_URL = 'swagger'  # Our API url (can of course be a local resource)
+    
+    RUN_URL = environ.get("RENDER_EXTERNAL_URL", "http://localhost")
+    RUN_PORT = environ.get("RUN_PORT", 5001)
 
 
 class TestingConfig(Config):

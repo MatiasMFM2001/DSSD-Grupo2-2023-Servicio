@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from src.service.config import config
 from src.service.helpers import handlers
 from src.core.database.db_instance import db
@@ -10,6 +10,7 @@ from src.api.helpers.api_responses import SimpleErrorResponse
 #Facu estuvo aqui
 #swagger
 from flask_swagger_ui import get_swaggerui_blueprint
+from pathlib import Path
 
 
 def create_app(static_folder: str = "static", env: str = "development") -> Flask:
@@ -25,7 +26,7 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
 
     # locale.setlocale(locale.LC_TIME, '')
 
-    app = Flask(__name__, static_folder=static_folder, template_folder="templates/")
+    app = Flask(__name__, static_folder=static_folder, template_folder=Path(__file__).parent.parent.parent.resolve())
     app.config.from_object(config[env])
     db.init_app(app)
 
@@ -99,7 +100,7 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
     
     @swaggerui_blueprint.route(app.config["API_URL"])
     def read_swagger_file():
-        return open("static/swagger.yaml", "r").read()
+        return render_template("static/swagger.yaml", url=app.config["RUN_URL"], port=app.config["RUN_PORT"])
 
     app.register_blueprint(root_api_bp)
     app.register_blueprint(swaggerui_blueprint)
