@@ -226,6 +226,34 @@ paths:
           description: Material not found
       security:
         - bearerAuth: []
+        
+  /materials/reserve:
+    post:
+      tags:
+        - slots
+      summary: Reservar un material existente
+      description: Reservar un material existente. Requiere `material_reserve`.
+      operationId: reserveMaterials
+      parameters:
+        - name: id
+          in: query
+          description: ID del material
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Material'          
+        '405':
+          description: Invalid input
+      security:
+        - bearerAuth: []
 
 
 
