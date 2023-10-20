@@ -105,6 +105,7 @@ def initializate_prod_db():
     action_modules = {
         "login": ["private"],
         "logout": ["private"],
+        "profile_edit": ["private"],
         
         "list": ["user", "category", "collection", "furniture", "furniture_file", "batch", "furniture_material", "material", "slot",],
         "show": ["home", "furniture_file", "collection", "furniture", "batch", "furniture_material", "slot", "material",],
