@@ -110,7 +110,7 @@ def get_string(request_args, key, error_raiser, key_meaning):
             ),
         )
 
-    return request_args.get(key)
+    return (request_args.get(key), None)
 
 
 def internal_validate(
@@ -183,7 +183,7 @@ def internal_validate_string(
         error_raiser,
         tuple_name,
         tuple_getter,
-        lambda key, **kwargs: tuple_getter(key, **kwargs) is not None,
+        lambda key, **kwargs: tuple_getter(key, **kwargs),
         "string",
         get_string,
         **kwargs
@@ -236,11 +236,13 @@ def api_validate_id(
 def api_validate_string(
     manager,
     request_args,
-    tuple_getter,
+    tuple_getter = None,
     key="id",
     tuple_name="La tupla",
     **kwargs
 ):
+    tuple_getter = tuple_getter or (lambda k, **kwargs: manager.filter_by_get_list(**{key: k}))
+    
     return internal_validate_string(
         manager,
         request_args,

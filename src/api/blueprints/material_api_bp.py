@@ -4,7 +4,7 @@ from src.core.business.material_manager import MaterialManager
 
 from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
-from src.service.helpers.controller_helpers import get_int, api_validate_id
+from src.service.helpers.controller_helpers import get_int, api_validate_id, api_validate_string
 from src.core.business.user_manager import auth_m
 from src.api.helpers.api_requests import get_json
 from werkzeug.exceptions import HTTPException
@@ -38,9 +38,29 @@ def all_materials():
 def material_by_id():
     """Obtiene un material según su ID."""
     
-    material, error = api_validate_id(materials_m, request.args, tuple_name="El material", key="materialId")
+    material, error = api_validate_id(
+        materials_m,                   
+        request.args,
+        "El material", 
+    )
 
     if error:
         return error
 
     return SimpleOKResponse(material=material.get_json())
+
+@material_api_bp.route("/getByName", methods=["GET"])
+@auth_m.permission_required("material_show")
+def material_by_name():
+    """Obtiene un material según su nombre."""
+    material, error = api_validate_string(
+        materials_m,                   
+        request.args,
+        key="name",
+        tuple_meaning="El material", 
+    )
+
+    if error:
+        return error
+
+    return SimpleOKResponse(material=material[0].get_json())

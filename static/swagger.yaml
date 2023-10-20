@@ -175,7 +175,7 @@ paths:
       description: Busca materiales por nombre. Se pueden agregar varios si se utilizan comas. Requiere `material_get`.
       operationId: getByNameMaterial
       parameters:
-        - name: materialName
+        - name: name
           in: query
           description: Nombres por el cual filtrar los materiales
           required: true
@@ -206,7 +206,7 @@ paths:
       description: Busca un unico material por su ID. Requiere `material_get`.
       operationId: getByIdMaterial
       parameters:
-        - name: materialId
+        - name: id
           in: query
           description: ID del material
           required: true

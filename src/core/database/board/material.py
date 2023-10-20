@@ -6,7 +6,7 @@ from src.core.database.resource_managers.physical_resource_manager import (
 class Material(db.Model):
     __tablename__ = "materials"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False, unique=True)
     price = db.Column(db.Float, nullable=False)
     arrivalDate = db.Column(db.Date, nullable=False)
     businessName = db.Column(db.String(255), nullable=False)
