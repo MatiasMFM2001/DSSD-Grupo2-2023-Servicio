@@ -41,7 +41,8 @@ def material_by_id():
     material, error = api_validate_id(
         materials_m,                   
         request.args,
-        "El material", 
+        key="id",
+        tuple_name="El material", 
     )
 
     if error:
