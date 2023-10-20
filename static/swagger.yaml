@@ -276,6 +276,34 @@ paths:
           description: Something went wrong
       security:
         - bearerAuth: []
+        
+  /slots/reserve:
+    post:
+      tags:
+        - slots
+      summary: Reservar un slot existente
+      description: Reservar un slot existente. Requiere `slot_reserve`.
+      operationId: reserveSlots
+      parameters:
+        - name: id
+          in: query
+          description: ID del slot
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Slot'          
+        '405':
+          description: Invalid input
+      security:
+        - bearerAuth: []
 
 components:
   schemas:
