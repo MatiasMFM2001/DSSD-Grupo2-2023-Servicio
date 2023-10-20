@@ -74,7 +74,7 @@ paths:
             - write:materials
             - read:materials
             
-  /materials/getByName{materialName}/:  #name?
+  /materials/getByName:  #name?
     get:
       tags:
         - materials
@@ -83,14 +83,12 @@ paths:
       operationId: getByNameMaterial
       parameters:
         - name: materialName
-          in: path
-          description: Nombres por los cuales flitrar los materiales
+          in: query
+          description: Nombres por el cual filtrar los materiales
           required: true
           explode: true
           schema:
-            type: array
-            items:
-              type: string
+            type: string
       responses:
         '200':
           description: successful operation
@@ -109,7 +107,7 @@ paths:
             - write:materials
             - read:materials
 
-  /materials/getById{materialId}:
+  /materials/getById:
     get:
       tags:
         - materials
@@ -118,7 +116,7 @@ paths:
       operationId: getByIdMaterial
       parameters:
         - name: materialId
-          in: path
+          in: query
           description: ID del material
           required: true
           schema:
