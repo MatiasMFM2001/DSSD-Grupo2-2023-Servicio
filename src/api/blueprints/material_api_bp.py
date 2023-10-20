@@ -4,7 +4,7 @@ from src.core.business.material_manager import MaterialManager
 
 from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
-from src.service.helpers.controller_helpers import get_int
+from src.service.helpers.controller_helpers import get_int, api_validate_id
 from src.core.business.user_manager import auth_m
 from src.api.helpers.api_requests import get_json
 from werkzeug.exceptions import HTTPException
