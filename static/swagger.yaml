@@ -27,7 +27,7 @@ paths:
       tags:
         - auth
       summary: Iniciar sesión al servicio.
-      description: Autenticar un usuario y obtener su token de acceso.
+      description: Autenticar un usuario y obtener su token de acceso. Requiere `private_login` (todos los usuarios no-autenticados lo tienen).
       operationId: loginUser
       requestBody:
         description: Autenticar un usuario y obtener su token de acceso.
@@ -36,8 +36,6 @@ paths:
             schema:
               $ref: '#/components/schemas/Login'
         required: true
-      security:
-        - permission: [private_login]
       responses:
         '200':
           description: Login successful
@@ -75,7 +73,7 @@ paths:
       tags:
         - auth
       summary: Cambiar la contraseña del usuario.
-      description: Cambiar la contraseña del usuario autenticado.
+      description: Cambiar la contraseña del usuario autenticado. Requiere `private_profile_edit`.
       operationId: changePassword
       requestBody:
         description: Cambiar la contraseña del usuario autenticado.
@@ -86,7 +84,6 @@ paths:
         required: true
       security:
         - bearerAuth: []
-        - permission: [private_profile_edit]
       responses:
         '200':
           description: Password change successful
@@ -125,7 +122,7 @@ paths:
       tags:
         - materials
       summary: Agregar un nuevo material a la API de proveedores
-      description: Agregar un nuevo material a la API
+      description: Agregar un nuevo material a la API. Requiere `material_create`.
       operationId: createMaterial
       requestBody:
         description: Agregar un nuevo material a la API
@@ -146,14 +143,13 @@ paths:
           description: Invalid input
       security:
         - bearerAuth: []
-        - permission: [material_create]
 
   /materials/all:
     get:
       tags:
         - materials
       summary: Lista a todos los materiales disponibles
-      description: Devuelve a todos los materiales disponibles en la API.
+      description: Devuelve a todos los materiales disponibles en la API. Requiere `material_all`.
       operationId: allMaterials
       responses:
         '200':
@@ -170,14 +166,13 @@ paths:
           description: Materials not found
       security:
         - bearerAuth: []
-        - permission: [material_all]
             
   /materials/getByName:  #name?
     get:
       tags:
         - materials
       summary: Busca materiales por nombre
-      description: Busca materiales por nombre. Se pueden agregar varios si se utilizan comas
+      description: Busca materiales por nombre. Se pueden agregar varios si se utilizan comas. Requiere `material_get`.
       operationId: getByNameMaterial
       parameters:
         - name: materialName
@@ -202,14 +197,13 @@ paths:
           description: Material not found
       security:
         - bearerAuth: []
-        - permission: [material_get]
 
   /materials/getById:
     get:
       tags:
         - materials
       summary: Busca materiales por ID
-      description: Busca un unico material por su ID
+      description: Busca un unico material por su ID. Requiere `material_get`.
       operationId: getByIdMaterial
       parameters:
         - name: materialId
@@ -232,7 +226,6 @@ paths:
           description: Material not found
       security:
         - bearerAuth: []
-        - permission: [material_get]
 
 
 
@@ -241,7 +234,7 @@ paths:
       tags:
         - slots
       summary: Agregar un nuevo slot a la API de proveedores
-      description: Agregar un nuevo slot a la API
+      description: Agregar un nuevo slot a la API. Requiere `slot_create`.
       operationId: createSlots
       requestBody:
         description: Agregar un nuevo slot a la API
@@ -262,14 +255,13 @@ paths:
           description: Invalid input
       security:
         - bearerAuth: []
-        - permission: [slot_create]
   
   /slots/all:
     get:
       tags:
         - slots
       summary: Lista a todos los materiales disponibles
-      description: Devuelve a todos los materiales disponibles en la API.
+      description: Devuelve a todos los materiales disponibles en la API. Requiere `slot_all`.
       operationId: allSlots
       responses:
         '200':
@@ -284,7 +276,6 @@ paths:
           description: Something went wrong
       security:
         - bearerAuth: []
-        - permission: [slot_all]
 
 components:
   schemas:
