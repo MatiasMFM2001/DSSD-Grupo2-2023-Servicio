@@ -76,6 +76,6 @@ def reserve_slot():
     if error:
         return error
 
-    materials_m.update(material.id, reserved=True)
+    #materials_m.update(material.id, reserved=True)
 
     return SimpleOKResponse(material=material.get_json())
