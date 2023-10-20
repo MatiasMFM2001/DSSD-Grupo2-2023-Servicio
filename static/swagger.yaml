@@ -45,9 +45,7 @@ paths:
         '400':
           description: Invalid input
       security:
-        - materialsslots_auth:
-            - write:materials
-            - read:materials
+        - bearerAuth: []
 
   /materials/all:
     get:
@@ -70,9 +68,7 @@ paths:
         '404':
           description: Materials not found
       security:
-        - materialsslots_auth:
-            - write:materials
-            - read:materials
+        - bearerAuth: []
             
   /materials/getByName:  #name?
     get:
@@ -103,9 +99,7 @@ paths:
         '404':
           description: Material not found
       security:
-        - materialsslots_auth:
-            - write:materials
-            - read:materials
+        - bearerAuth: []
 
   /materials/getById:
     get:
@@ -134,10 +128,7 @@ paths:
         '404':
           description: Material not found
       security:
-        - api_key: []
-        - materialsslots_auth:
-            - write:materials
-            - read:materials
+        - bearerAuth: []
 
 
 
@@ -166,10 +157,7 @@ paths:
         '405':
           description: Invalid input
       security:
-        - api_key: []
-        - materialsslots_auth:
-            - write:slots
-            - read:slots
+        - bearerAuth: []
   
   /slots/all:
     get:
@@ -190,9 +178,7 @@ paths:
         '400':
           description: Something went wrong
       security:
-        - materialsslots_auth:
-            - write:slots
-            - read:slots
+        - bearerAuth: []
 
 components:
   schemas:
@@ -280,17 +266,25 @@ components:
             $ref: '#/components/schemas/Slot'
 
   securitySchemes:
-    materialsslots_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://materialsslots3.swagger.io/oauth/authorize
-          scopes:
-            write:materials: modify materials in your account
-            read:materials: read your materials
-            write:slots: modify materials in your account
-            read:slots: read your materials
-    api_key:
+    #materialsslots_auth:
+      #type: oauth2
+      #flows:
+        #implicit:
+          #authorizationUrl: https://materialsslots3.swagger.io/oauth/authorize
+          #scopes:
+            #write:materials: modify materials in your account
+            #read:materials: read your materials
+            #write:slots: modify materials in your account
+            #read:slots: read your materials
+    bearerAuth:
       type: apiKey
-      name: api_key
+      name: Authorization
       in: header
+      bearerFormat: JWT
+
+securityDefinitions:
+  basicAuth:
+    type: basic
+
+security:
+  - bearerAuth: []
