@@ -10,6 +10,7 @@ class Material(db.Model):
     price = db.Column(db.Float, nullable=False)
     arrivalDate = db.Column(db.Date, nullable=False)
     businessName = db.Column(db.String(255), nullable=False)
+    unit = db.Column(db.String(10))
 
     @staticmethod
     def resource_manager():
