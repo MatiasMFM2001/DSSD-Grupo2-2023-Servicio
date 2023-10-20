@@ -47,7 +47,6 @@ def reset_db():
 permission_rm = Permission.resource_manager()
 role_rm = Role.resource_manager()
 user_rm = User.resource_manager()
-categ_rm = Category.resource_manager()
 material_rm = Material.resource_manager()
 
 
@@ -223,9 +222,6 @@ def initializate_prod_db():
     )
 
     
-
-    # Category
-    category = categ_rm.create(name="Palmeiras New York Enano")
 
     # Materiales
     material1 = material_rm.create(name="Madera", price=465.2)
