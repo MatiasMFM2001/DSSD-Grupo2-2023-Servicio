@@ -45,8 +45,8 @@ def slot_by_id():
 
     return SimpleOKResponse(slot=slot.get_json())
 
-@slot_api_bp.route("/reserve", methods=["GET"])
-@auth_m.permission_required("slot_show")
+@slot_api_bp.route("/reserve", methods=["POST"])
+@auth_m.permission_required("slot_reserve")
 def reserve_slot():
     """Reserva un slot de fabricación"""
     slot, error = api_validate_id(slots_m, request.args, tuple_name="El slot")
