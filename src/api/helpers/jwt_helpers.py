@@ -10,7 +10,7 @@ algorithm = "HS256"
 def encode(**values: any) -> str:
     return jwt.encode(
         {
-            "exp": datetime.now(tz=timezone.utc) + timedelta(seconds=10),
+            "exp": datetime.now(tz=timezone.utc) + timedelta(minutes=10),
             **values
         },
         current_app.secret_key,
