@@ -44,3 +44,16 @@ def slot_by_id():
         return error
 
     return SimpleOKResponse(slot=slot.get_json())
+
+@slot_api_bp.route("/reserve", methods=["POST"])
+@auth_m.permission_required("slot_reserve")
+def reserve_slot():
+    """Reserva un slot de fabricación"""
+    slot, error = api_validate_id(slots_m, request.args, tuple_name="El slot")
+
+    if error:
+        return error
+
+    slots_m.update(slot.id, reserved=True)
+
+    return SimpleOKResponse(slot=slot.get_json())

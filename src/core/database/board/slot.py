@@ -11,6 +11,7 @@ class Slot(db.Model):
     beginning = db.Column(db.Date, nullable=False)
     end = db.Column(db.Date, nullable=False)
     businessName = db.Column(db.String(255), nullable=False)
+    reserved = db.Column(db.Boolean, default=False)
 
     @staticmethod
     def resource_manager():
