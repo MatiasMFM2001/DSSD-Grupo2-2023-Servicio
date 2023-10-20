@@ -14,12 +14,111 @@ servers:
   - url: {{url}}:{{port}}/api
   
 tags:
+  - name: auth
+    description: Todo lo necesario relacionado al usuario.
   - name: materials
     description: Todo lo necesario para pedir materiales
   - name: slots
     description: Todo lo necesario para reservar slots de fabricación
 
 paths:
+  /login:
+    post:
+      tags:
+        - auth
+      summary: Iniciar sesión al servicio.
+      description: Autenticar un usuario y obtener su token de acceso.
+      operationId: loginUser
+      requestBody:
+        description: Autenticar un usuario y obtener su token de acceso.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+        required: true
+      security:
+        - permission: [private_login]
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiam9obiBkb2UifQ.XXXXXXXXXXXXXXXXXXXXXXXXX
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Credenciales inválidas
+        '403': 
+          description: User doesn't have permission
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: No tiene permisos
+
+  /me/editar_perfil:
+    post:
+      tags:
+        - auth
+      summary: Cambiar la contraseña del usuario.
+      description: Cambiar la contraseña del usuario autenticado.
+      operationId: changePassword
+      requestBody:
+        description: Cambiar la contraseña del usuario autenticado.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewPassword'
+        required: true
+      security:
+        - permission: [private_profile_edit]
+      responses:
+        '200':
+          description: Password change successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Contraseña cambiada exitosamente
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Credenciales inválidas
+        '403': 
+          description: User doesn't have permission
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: No tiene permisos
+
+
   /materials/create:
     post:
       tags:
@@ -198,7 +297,29 @@ paths:
 
 components:
   schemas:
-        
+
+    Login:
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+          example: admin@a.com
+        password:
+          type: string
+          example: 1234
+    
+    NewPassword:
+      required:
+        - new_pass
+      type: object
+      properties:
+        email:
+          type: string
+          example: 123456
+  
     Material:
       required:
         - name
