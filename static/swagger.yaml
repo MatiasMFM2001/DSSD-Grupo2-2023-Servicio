@@ -300,7 +300,7 @@ components:
         - new_pass
       type: object
       properties:
-        email:
+        new_pass:
           type: string
           example: 123456
   
