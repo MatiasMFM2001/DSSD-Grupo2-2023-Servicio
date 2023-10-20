@@ -174,6 +174,7 @@ def internal_validate_string(
     error_raiser,
     tuple_name,
     tuple_getter,
+    key_meaning,
     **kwargs
 ):
     return internal_validate(
@@ -184,7 +185,7 @@ def internal_validate_string(
         tuple_name,
         tuple_getter,
         lambda key, **kwargs: tuple_getter(key, **kwargs),
-        "string",
+        key_meaning,
         get_string,
         **kwargs
     )
@@ -239,6 +240,7 @@ def api_validate_string(
     tuple_getter = None,
     key="id",
     tuple_name="La tupla",
+    key_meaning="string",
     **kwargs
 ):
     tuple_getter = tuple_getter or (lambda k, **kwargs: manager.filter_by_get_list(**{key: k}))
@@ -250,6 +252,7 @@ def api_validate_string(
         SimpleErrorResponse,
         tuple_name,
         tuple_getter,
+        key_meaning,
         **kwargs
     )
 

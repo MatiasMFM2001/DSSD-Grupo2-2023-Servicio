@@ -57,7 +57,8 @@ def material_by_name():
         materials_m,                   
         request.args,
         key="name",
-        tuple_meaning="El material", 
+        tuple_meaning="El material",
+        key_meaning="nombre"
     )
 
     if error:
