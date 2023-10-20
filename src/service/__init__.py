@@ -4,7 +4,6 @@ from src.service.helpers import handlers
 from src.core.database.db_instance import db
 from src.core.database import database
 from src.api.blueprints.root_api_bp import root_api_bp
-from src.service.helpers import controller_helpers
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 from src.api.helpers.api_responses import SimpleErrorResponse
@@ -76,19 +75,11 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
     @app.errorhandler(Exception)
     def handle_error(exception):
         return SimpleErrorResponse(500, str(exception))
-    
-    app.jinja_env.globals.update(generate_url=controller_helpers.generate_url)
-
-    app.register_blueprint(root_api_bp)
-
 
     #Facu estuvo aqui
     #Swagger
     
-
-
-
-# Call factory function to create our blueprint
+    # Call factory function to create our blueprint
     swaggerui_blueprint = get_swaggerui_blueprint(
         app.config["SWAGGER_URL"],  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
         app.config["API_URL"],
@@ -105,8 +96,7 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
         # }
     )
 
-
+    app.register_blueprint(root_api_bp)
     app.register_blueprint(swaggerui_blueprint)
-
 
     return app
