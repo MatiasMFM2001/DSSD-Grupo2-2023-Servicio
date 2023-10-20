@@ -54,6 +54,9 @@ def reserve_slot():
     if error:
         return error
 
+    if slot.reserved:
+        return SimpleErrorResponse(f"El slot de ID {slot.id} ya estaba reservado")
+      
     slots_m.update(slot.id, reserved=True)
 
     return SimpleOKResponse(slot=slot.get_json())
