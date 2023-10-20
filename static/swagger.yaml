@@ -146,6 +146,7 @@ paths:
           description: Invalid input
       security:
         - bearerAuth: []
+        - permission: [material_create]
 
   /materials/all:
     get:
@@ -169,6 +170,7 @@ paths:
           description: Materials not found
       security:
         - bearerAuth: []
+        - permission: [material_all]
             
   /materials/getByName:  #name?
     get:
@@ -200,6 +202,7 @@ paths:
           description: Material not found
       security:
         - bearerAuth: []
+        - permission: [material_get]
 
   /materials/getById:
     get:
@@ -229,6 +232,7 @@ paths:
           description: Material not found
       security:
         - bearerAuth: []
+        - permission: [material_get]
 
 
 
@@ -258,6 +262,7 @@ paths:
           description: Invalid input
       security:
         - bearerAuth: []
+        - permission: [slot_create]
   
   /slots/all:
     get:
@@ -279,6 +284,7 @@ paths:
           description: Something went wrong
       security:
         - bearerAuth: []
+        - permission: [slot_all]
 
 components:
   schemas:
