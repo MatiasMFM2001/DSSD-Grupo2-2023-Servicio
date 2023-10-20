@@ -85,6 +85,7 @@ paths:
               $ref: '#/components/schemas/NewPassword'
         required: true
       security:
+        - bearerAuth: []
         - permission: [private_profile_edit]
       responses:
         '200':
@@ -398,14 +399,9 @@ components:
             #write:slots: modify materials in your account
             #read:slots: read your materials
     bearerAuth:
-      type: apiKey
-      name: Authorization
-      in: header
+      type: http
+      scheme: bearer
       bearerFormat: JWT
-
-securityDefinitions:
-  basicAuth:
-    type: basic
 
 security:
   - bearerAuth: []
