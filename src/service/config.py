@@ -46,7 +46,7 @@ class DevelopmentConfig(Config):
     BACKEND_URI = "http://localhost:5000"
 
     SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
-    API_URL = 'static/swagger.yaml'  # Our API url (can of course be a local resource)
+    API_URL = 'swagger'  # Our API url (can of course be a local resource)
 
 
 class TestingConfig(Config):

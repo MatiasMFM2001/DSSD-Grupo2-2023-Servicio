@@ -83,6 +83,7 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
     swaggerui_blueprint = get_swaggerui_blueprint(
         app.config["SWAGGER_URL"],  # Swagger UI static files will be mapped to '{SWAGGER_URL}/dist/'
         app.config["API_URL"],
+        
         config={  # Swagger UI config overrides
             'app_name': "Global Furniture"
         },
@@ -95,6 +96,10 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
         #    'additionalQueryStringParams': {'test': "hello"}
         # }
     )
+    
+    @swaggerui_blueprint.route("swagger")
+    def read_swagger_file():
+        return open("static/swagger.yaml", "r").read()
 
     app.register_blueprint(root_api_bp)
     app.register_blueprint(swaggerui_blueprint)
