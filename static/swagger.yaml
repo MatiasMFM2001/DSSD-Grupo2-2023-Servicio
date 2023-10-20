@@ -11,7 +11,8 @@ info:
     _A continuación guardamos la metodología con la cual nos comunicamos con las APIS de terceros para poder lograr nuestros objetivos organizacionales_
     
 servers:
-  - url: {{url}}:{{port}}
+  - url: {{url}}:{{port}}/api
+  
 tags:
   - name: materials
     description: Todo lo necesario para pedir materiales
