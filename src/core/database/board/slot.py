@@ -7,9 +7,10 @@ from src.core.database.resource_managers.physical_resource_manager import (
 class Slot(db.Model):
     __tablename__ = "slots"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
+    price = db.Column(db.Float, nullable=False)
     beginning = db.Column(db.Date, nullable=False)
     end = db.Column(db.Date, nullable=False)
+    businessName = db.Column(db.String(255), nullable=False)
 
     @staticmethod
     def resource_manager():
@@ -22,8 +23,9 @@ class Slot(db.Model):
     
     def get_json(self):
         return {
-            "name": self.name,
             "id": self.id,
+            "price": self.price,
             "beginning": self.beginning,
             "end":self.end,
+            "businessName": self.businessName,
         }

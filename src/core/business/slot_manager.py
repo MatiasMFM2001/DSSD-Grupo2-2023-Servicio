@@ -8,12 +8,11 @@ class SlotManager(CRUDManager):
         super().__init__(Slot)
     
     def validate(self, **kwargs):
-        name = kwargs.get("name")
+            
+        price = kwargs.get("price")
         
-        if name is not None:
-            search = self.database.filter_by(name=name).first()
-            if (search is not None) and (search.name == name):
-                raise ValueError(f"El nombre de slot '{name}' ya está en uso.")
+        if price is not None and price < 0.0:
+            raise ValueError(f"El precio {price} es negativo.")
         
         beginning = kwargs.get("beginning")
         end = kwargs.get("end")

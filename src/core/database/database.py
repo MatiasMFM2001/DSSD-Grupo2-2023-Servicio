@@ -48,6 +48,7 @@ permission_rm = Permission.resource_manager()
 role_rm = Role.resource_manager()
 user_rm = User.resource_manager()
 material_rm = Material.resource_manager()
+slot_rm = Slot.resource_manager()
 
 
 def populate_db():
@@ -224,8 +225,13 @@ def initializate_prod_db():
     
 
     # Materiales
-    material1 = material_rm.create(name="Madera", price=465.2)
-    material2 = material_rm.create(name="Metal", price=1200.3)
-    materail3 = material_rm.create(name="Melamina", price=2015.9)
+    material1 = material_rm.create(name="Madera", price=465.2 ,arrivalDate=date(2023,12,3), businessName="Maderera San Jorge")
+    material2 = material_rm.create(name="Metal", price=1200.3, arrivalDate=date(2023,11,22), businessName="Herrería Hefesto")
+    materail3 = material_rm.create(name="Melamina", price=2015.9 ,arrivalDate=date(2023,11,15), businessName="Melamina de Nina")
+
+    #
+    slot1 = slot_rm.create(price=82015.9 ,beginning=date(2023,10,27), end=date(2024,1,18) , businessName="Ensambles Don Pepe")
+    slot2 = slot_rm.create(price=92070.0 ,beginning=date(2023,11,3), end=date(2024,2,1) , businessName="Fabrica Fabricio")
+    slot3 = slot_rm.create(price=55033.5 ,beginning=date(2023,11,9), end=date(2024,1,30) , businessName="Armados Armando")
 
     print("Finished initializing BD")
