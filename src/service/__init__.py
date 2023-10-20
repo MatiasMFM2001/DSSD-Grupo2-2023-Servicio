@@ -86,7 +86,12 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
         app.config["API_URL"],
         
         config={  # Swagger UI config overrides
-            'app_name': "Global Furniture"
+            "app_name": "Global Furniture",
+            "onComplete": """
+                function(ui) {
+                    ui.preauthorizeApiKey("bearerAuth", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTc4MTgyMjMsImlkIjoxfQ.NXRJSFAcWKFxezbZfo2eknurORhHXz5IzoXTH6h4cdo")
+                }
+            """
         },
         # oauth_config={  # OAuth config. See https://github.com/swagger-api/swagger-ui#oauth2-configuration .
         #    'clientId': "your-client-id",

@@ -38,7 +38,7 @@ def all_materials():
 def material_by_id():
     """Obtiene un material según su ID."""
     
-    material, error = api_validate_id(materials_m, request.args, tuple_name="El material")
+    material, error = api_validate_id(materials_m, request.args, tuple_name="El material", key="materialId")
 
     if error:
         return error
