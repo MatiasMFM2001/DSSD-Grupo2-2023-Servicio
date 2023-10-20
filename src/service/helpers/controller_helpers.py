@@ -80,13 +80,13 @@ def is_integer(string_to_check):
     return re.match(r"\A\d+\Z", string_to_check)
 
 
-def get_int(request_args, key, error_raiser, int_meaning):
+def get_int(request_args, key, error_raiser, key_meaning):
     if not key in request_args:
         return (
             None,
             error_raiser(
                 400,
-                f"La {int_meaning} '{key}' no fue incluída en los argumentos de la query URL",
+                f"La {key_meaning} '{key}' no fue incluída en los argumentos de la query URL",
             ),
         )
 
@@ -95,14 +95,35 @@ def get_int(request_args, key, error_raiser, int_meaning):
     if not is_integer(value):
         return (
             None,
-            error_raiser(400, f"La {int_meaning} {value} no es un entero válido"),
+            error_raiser(400, f"La {key_meaning} {value} no es un entero válido"),
         )
 
     return (int(value), None)
 
+def get_string(request_args, key, error_raiser, key_meaning):
+    if not key in request_args:
+        return (
+            None,
+            error_raiser(
+                400,
+                f"La {key_meaning} '{key}' no fue incluída en los argumentos de la query URL",
+            ),
+        )
 
-def internal_validate_id(
-    manager, request_args, include_inactive, key, error_raiser, tuple_name
+    return request_args.get(key)
+
+
+def internal_validate(
+    manager,
+    request_args,
+    key,
+    error_raiser,
+    tuple_name,
+    tuple_getter,
+    tuple_finder,
+    key_meaning,
+    key_getter,
+    **kwargs
 ):
     """Valida si el id ingresado es un entero y si existe en la base de datos.
 
@@ -115,15 +136,58 @@ def internal_validate_id(
     Returns:
         object: Devuelve el objeto si el id es válido, None si no lo es.
     """
-    id, error = get_int(request_args, key, error_raiser, "ID")
+    key, error = key_getter(request_args, key, error_raiser, key_meaning)
 
     if error:
         return (None, error)
 
-    if not manager.exists(id, include_inactive):
-        return (None, error_raiser(404, f"{tuple_name} de ID {id} no existe"))
+    if not tuple_finder(key, **kwargs):
+        return (None, error_raiser(404, f"{tuple_name} de {key_meaning} {key} no existe"))
 
-    return (manager.get(id, include_inactive), None)
+    return (tuple_getter(key, **kwargs), None)
+
+def internal_validate_id(
+    manager,
+    request_args,
+    key,
+    error_raiser,
+    tuple_name,
+    **kwargs
+):
+    return internal_validate(
+        manager,
+        request_args,
+        key,
+        error_raiser,
+        tuple_name,
+        manager.get,
+        manager.exists,
+        "ID",
+        get_int,
+        **kwargs
+    )
+
+def internal_validate_string(
+    manager,
+    request_args,
+    key,
+    error_raiser,
+    tuple_name,
+    tuple_getter,
+    **kwargs
+):
+    return internal_validate(
+        manager,
+        request_args,
+        key,
+        error_raiser,
+        tuple_name,
+        tuple_getter,
+        lambda key, **kwargs: tuple_getter(key, **kwargs) is not None,
+        "string",
+        get_string,
+        **kwargs
+    )
 
 
 ALLOWED_EXTENSIONS = set(["png", "jpg", "jpeg"])
@@ -134,7 +198,11 @@ def allowed_file(filename):
 
 
 def validate_id(
-    manager, request_args, include_inactive=False, key="id", tuple_name="La tupla"
+    manager,
+    request_args,
+    key="id",
+    tuple_name="La tupla",
+    **kwargs
 ):
     result = internal_validate_id(
         manager,
@@ -143,18 +211,45 @@ def validate_id(
         key,
         lambda http_code, message: abort(http_code),
         tuple_name,
+        **kwargs,
     )
 
     return result[0]
 
 
 def api_validate_id(
-    manager, request_args, include_inactive=False, key="id", tuple_name="La tupla"
+    manager,
+    request_args,
+    key="id",
+    tuple_name="La tupla",
+    **kwargs
 ):
     return internal_validate_id(
-        manager, request_args, include_inactive, key, SimpleErrorResponse, tuple_name
+        manager,
+        request_args,
+        key,
+        SimpleErrorResponse,
+        tuple_name,
+        **kwargs
     )
 
+def api_validate_string(
+    manager,
+    request_args,
+    tuple_getter,
+    key="id",
+    tuple_name="La tupla",
+    **kwargs
+):
+    return internal_validate_string(
+        manager,
+        request_args,
+        key,
+        SimpleErrorResponse,
+        tuple_name,
+        tuple_getter,
+        **kwargs
+    )
 
 def internal_validate_file(request_files, field_name, allowed_mimes, error_raiser):
     if not field_name in request_files:
