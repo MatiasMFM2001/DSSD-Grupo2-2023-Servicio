@@ -45,7 +45,7 @@ def slot_by_id():
 
     return SimpleOKResponse(slot=slot.get_json())
 
-@slot_api_bp.route("/get", methods=["GET"])
+@slot_api_bp.route("/reserve", methods=["GET"])
 @auth_m.permission_required("slot_show")
 def reserve_slot():
     """Reserva un slot de fabricación"""
