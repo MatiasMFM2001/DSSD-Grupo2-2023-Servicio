@@ -23,6 +23,9 @@ class ProductionConfig(Config):
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     BACKEND_URI = "https://admin-grupo20.proyecto2022.linti.unlp.edu.ar"
 
+   # SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
+    #API_URL = 'http://petstore.swagger.io/v2/swagger.json'  # Our API url (can of course be a local resource)
+
 
 class DevelopmentConfig(Config):
     SECRET_KEY = "fdkljdklghjdshlk"
@@ -41,6 +44,9 @@ class DevelopmentConfig(Config):
     UPLOAD_FOLDER = "public/images/uploads"
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     BACKEND_URI = "http://localhost:5000"
+
+    SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI (without trailing '/')
+    API_URL = 'static/swagger.yaml'  # Our API url (can of course be a local resource)
 
 
 class TestingConfig(Config):

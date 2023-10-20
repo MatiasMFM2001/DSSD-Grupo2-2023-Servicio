@@ -1,0 +1,297 @@
+openapi: 3.0.3
+info:
+  title: Global Furniture
+  version: 1.0.0
+  description: |-
+
+    En Global Furniture es una empresa que se dedica a fabricar muebles a través de materiales
+    sustentables y reciclados, desde madera a policarbonato o nylon reciclado. Nos enfocamos en 
+    brindar siempre la mejor calidad de muebles ya sea con estilos modernos como vintage.
+
+    _A continuación guardamos la metodología con la cual nos comunicamos con las APIS de terceros para poder lograr nuestros objetivos organizacionales_
+    
+servers:
+  - url: http://localhost:5001
+tags:
+  - name: materials
+    description: Todo lo necesario para pedir materiales
+  - name: slots
+    description: Todo lo necesario para reservar slots de fabricación
+
+paths:
+  /materials/create:
+    post:
+      tags:
+        - materials
+      summary: Agregar un nuevo material a la API de proveedores
+      description: Agregar un nuevo material a la API
+      operationId: createMaterial
+      requestBody:
+        description: Agregar un nuevo material a la API
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Material'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Material'          
+        '400':
+          description: Invalid input
+      security:
+        - materialsslots_auth:
+            - write:materials
+            - read:materials
+
+  /materials/all:
+    get:
+      tags:
+        - materials
+      summary: Lista a todos los materiales disponibles
+      description: Devuelve a todos los materiales disponibles en la API.
+      operationId: allMaterials
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Material'          
+        '400':
+          description: Something went wrong
+        '404':
+          description: Materials not found
+      security:
+        - materialsslots_auth:
+            - write:materials
+            - read:materials
+            
+  /materials/getByName{materialName}/:  #name?
+    get:
+      tags:
+        - materials
+      summary: Busca materiales por nombre
+      description: Busca materiales por nombre. Se pueden agregar varios si se utilizan comas
+      operationId: getByNameMaterial
+      parameters:
+        - name: materialName
+          in: path
+          description: Nombres por los cuales flitrar los materiales
+          required: true
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Material'          
+        '400':
+          description: Invalid name value
+        '404':
+          description: Material not found
+      security:
+        - materialsslots_auth:
+            - write:materials
+            - read:materials
+
+  /materials/getById{materialId}:
+    get:
+      tags:
+        - materials
+      summary: Busca materiales por ID
+      description: Busca un unico material por su ID
+      operationId: getByIdMaterial
+      parameters:
+        - name: materialId
+          in: path
+          description: ID del material
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Material'          
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Material not found
+      security:
+        - api_key: []
+        - materialsslots_auth:
+            - write:materials
+            - read:materials
+
+
+
+  /slots/create:
+    post:
+      tags:
+        - slots
+      summary: Agregar un nuevo slot a la API de proveedores
+      description: Agregar un nuevo slot a la API
+      operationId: createSlots
+      requestBody:
+        description: Agregar un nuevo slot a la API
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Slot'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Slot'          
+        '405':
+          description: Invalid input
+      security:
+        - api_key: []
+        - materialsslots_auth:
+            - write:slots
+            - read:slots
+  
+  /slots/all:
+    get:
+      tags:
+        - slots
+      summary: Lista a todos los materiales disponibles
+      description: Devuelve a todos los materiales disponibles en la API.
+      operationId: allSlots
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Slot'          
+        '400':
+          description: Something went wrong
+      security:
+        - materialsslots_auth:
+            - write:slots
+            - read:slots
+
+components:
+  schemas:
+        
+    Material:
+      required:
+        - name
+        - price
+        - arrivalDate
+        - businessName
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: Madera
+        price:
+          type: number
+          format: float
+          example: 1499.99
+        arrivalDate:
+          type: string
+          format: date-time
+          example: 2023-09-19 00:00:00
+        businessName:
+          type: string
+          example: Maderera San Jorge
+      xml:
+        name: material
+        
+    Slot:
+      required:
+        - price
+        - beginning
+        - end
+        - businessName
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        price:
+          type: number
+          format: float
+          example: 84999.99
+        beginning:
+          type: string
+          format: date-time
+          example: 2023-09-19 00:00:00
+        end:
+          type: string
+          format: date-time
+          example: 2023-11-19 00:00:00
+        businessName:
+          type: string
+          example: Ensambles Don Pepe
+      xml:
+        name: slot 
+        
+        
+  requestBodies:
+  
+    materials:
+      description: Materiales para agregar a la API
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Material'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Material'
+    
+    slots:
+      description: Slots para agregar a la API
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Slot'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Slot'
+
+  securitySchemes:
+    materialsslots_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://materialsslots3.swagger.io/oauth/authorize
+          scopes:
+            write:materials: modify materials in your account
+            read:materials: read your materials
+            write:slots: modify materials in your account
+            read:slots: read your materials
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
