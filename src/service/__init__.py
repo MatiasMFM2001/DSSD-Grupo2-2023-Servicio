@@ -97,7 +97,7 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
         # }
     )
     
-    @swaggerui_blueprint.route("swagger")
+    @swaggerui_blueprint.route(app.config["API_URL"])
     def read_swagger_file():
         return open("static/swagger.yaml", "r").read()
 
