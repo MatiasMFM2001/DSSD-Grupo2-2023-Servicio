@@ -4,7 +4,7 @@ from src.core.business.material_manager import MaterialManager
 
 from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
-from src.service.helpers.controller_helpers import get_int
+from src.service.helpers.controller_helpers import get_int, api_validate_id
 from src.core.business.user_manager import auth_m
 from src.api.helpers.api_requests import get_json
 from werkzeug.exceptions import HTTPException
@@ -16,7 +16,7 @@ materials_m = MaterialManager()
 @material_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("material_create")
 def create_material():
-    values, error = get_json({"name", "price"})
+    values, error = get_json({"name", "price", "arrivalDate", "businessName"})
 
     if error:
         return error
@@ -33,7 +33,7 @@ def all_materials():
     
     return SimpleOKResponse(materials=materials)
 
-@material_api_bp.route("/get", methods=["GET"])
+@material_api_bp.route("/getById", methods=["GET"])
 @auth_m.permission_required("material_show")
 def material_by_id():
     """Obtiene un material según su ID."""
