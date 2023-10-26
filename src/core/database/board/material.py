@@ -6,11 +6,16 @@ from src.core.database.resource_managers.physical_resource_manager import (
 class Material(db.Model):
     __tablename__ = "materials"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False, unique=True)
+    name = db.Column(db.String(120), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    arrivalDate = db.Column(db.Date, nullable=False)
-    businessName = db.Column(db.String(255), nullable=False)
-
+    #arrivalDate = db.Column(db.Date, nullable=False)
+    stock = db.Column(db.Integer, nullable=False, default=0)
+    
+    supplier_id = db.Column(db.Integer, db.ForeignKey("enterprises.id"))
+    supplier = db.relationship("Supplier", back_populates="materials")
+    
+    requests = db.relationship("MaterialRequest", back_populates="material")
+    
     @staticmethod
     def resource_manager():
         """Retorna el resource manager para este modelo.
@@ -25,6 +30,6 @@ class Material(db.Model):
             "name": self.name,
             "id": self.id,
             "price": self.price,
-            "arrivalDate": self.arrivalDate,
-            "businessName": self.businessName,
+            "stock": self.stock,
         }
+    

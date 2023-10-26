@@ -2,12 +2,15 @@ from src.core.database.db_instance import db
 from src.core.database.resource_managers.physical_resource_manager import (
     PhysicalResourceManager,
 )
+from src.core.database.board import Enterprise
 
-class Enterprise(db.Model):
-    __tablename__ = "enterprises"
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    location = db.Column(db.String(255), nullable=False)
+class Producer(Enterprise):
+    __tablename__ = "producers"
+    slots = db.relationship("FabricationSlot", back_populates="producer")
+    
+    __mapper_args__ = {
+        "polymorphic_identity": "producer",
+    }
     
     @staticmethod
     def resource_manager():
@@ -16,6 +19,6 @@ class Enterprise(db.Model):
         Returns:
             PhysicalResourceManager: Resource manager para este modelo.
         """
-        return PhysicalResourceManager(db.session, Enterprise)
+        return PhysicalResourceManager(db.session, Producer)
     
     
