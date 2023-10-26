@@ -11,7 +11,7 @@ class FabricationSlot(db.Model):
     end = db.Column(db.Date, nullable=False)
     
     producer_id = db.Column(db.Integer, db.ForeignKey("enterprises.id"))
-    producer = db.relationship("Producer", back_populates="slots")
+    producer = db.relationship("Producer", back_populates="slots2")
     
     @staticmethod
     def resource_manager():

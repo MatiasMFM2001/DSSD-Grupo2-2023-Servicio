@@ -7,7 +7,7 @@ class MaterialRequest(db.Model):
     __tablename__ = "material_requests"
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, nullable=False)
-    delivery_date = db.Column(db.Date, nullable=False)
+    arrival_date = db.Column(db.Date, nullable=False)
     
     material_id = db.Column(db.Integer, db.ForeignKey("materials.id"))
     material = db.relationship("Material", back_populates="requests")
@@ -25,7 +25,7 @@ class MaterialRequest(db.Model):
         return {
             "id": self.id,
             "amount": self.amount,
-            "delivery_date": self.delivery_date,
+            "arrival_date": self.arrival_date,
             "material_id": self.material_id,
         }
     

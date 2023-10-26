@@ -47,8 +47,11 @@ def reset_db():
 permission_rm = Permission.resource_manager()
 role_rm = Role.resource_manager()
 user_rm = User.resource_manager()
+
+producer_rm = Producer.resource_manager()
+supplier_rm = Supplier.resource_manager()
 material_rm = Material.resource_manager()
-slot_rm = Slot.resource_manager()
+fabrication_slot_rm = FabricationSlot.resource_manager()
 
 
 def populate_db():
@@ -225,15 +228,80 @@ def initializate_prod_db():
     )
 
     
-
+    # Proveedores
+    supplier1 = supplier_rm.create(
+        name="Maderera San Jorge",
+        location="Madrid",
+    )
+    
+    supplier2 = supplier_rm.create(
+        name="Herrería Hefesto",
+        location="Tarragona",
+    )
+    
+    supplier3 = supplier_rm.create(
+        name="Melamina de Nina",
+        location="Barcelona",
+    )
+    
+    # Fabricantes
+    producer1 = supplier_rm.create(
+        name="Ensambles Don Pepe",
+        location="Madrid",
+    )
+    
+    producer2 = supplier_rm.create(
+        name="Fábrica Fabricio",
+        location="Tarragona",
+    )
+    
+    producer3 = supplier_rm.create(
+        name="Armados Armando",
+        location="Barcelona",
+    )
+    
     # Materiales
-    material1 = material_rm.create(name="Madera", price=465.2 ,arrivalDate=date(2023,12,3), businessName="Maderera San Jorge")
-    material2 = material_rm.create(name="Metal", price=1200.3, arrivalDate=date(2023,11,22), businessName="Herrería Hefesto")
-    materail3 = material_rm.create(name="Melamina", price=2015.9 ,arrivalDate=date(2023,11,15), businessName="Melamina de Nina")
+    material1 = material_rm.create(
+        name="Madera",
+        price=465.2,
+        #arrivalDate=date(2023,12,3),
+        supplier=supplier1,
+    )
+    
+    material2 = material_rm.create(
+        name="Metal",
+        price=1200.3,
+        #arrivalDate=date(2023,11,22),
+        supplier=supplier2,
+    )
+    
+    material3 = material_rm.create(
+        name="Melamina",
+        price=2015.9,
+        #arrivalDate=date(2023,11,15),
+        supplier=supplier3,
+    )
 
-    #
-    slot1 = slot_rm.create(price=82015.9 ,beginning=date(2023,10,27), end=date(2024,1,18) , businessName="Ensambles Don Pepe")
-    slot2 = slot_rm.create(price=92070.0 ,beginning=date(2023,11,3), end=date(2024,2,1) , businessName="Fabrica Fabricio")
-    slot3 = slot_rm.create(price=55033.5 ,beginning=date(2023,11,9), end=date(2024,1,30) , businessName="Armados Armando")
+    # Slots de fabricación
+    slot1 = fabrication_slot_rm.create(
+        price=82015.9,
+        beginning=date(2023, 10, 27),
+        end=date(2024, 1, 18),
+        producer=producer1,
+    )
+    
+    slot2 = fabrication_slot_rm.create(
+        price=92070.0,
+        beginning=date(2023, 11, 3),
+        end=date(2024, 2, 1),
+        producer=producer2,
+    )
+    
+    slot3 = fabrication_slot_rm.create(
+        price=55033.5,
+        beginning=date(2023, 11, 9),
+        end=date(2024, 1, 30),
+        producer=producer3,
+    )
 
     print("Finished initializing BD")

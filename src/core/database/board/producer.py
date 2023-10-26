@@ -6,7 +6,7 @@ from src.core.database.board import Enterprise
 
 class Producer(Enterprise):
     __tablename__ = "producers"
-    slots = db.relationship("FabricationSlot", back_populates="producer")
+    slots2 = db.relationship("FabricationSlot", back_populates="producer")
     
     __mapper_args__ = {
         "polymorphic_identity": "producer",
