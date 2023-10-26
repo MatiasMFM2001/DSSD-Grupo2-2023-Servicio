@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from src.core.business.slot_manager import SlotManager
+from src.core.business.fabrication_slot_manager import FabricationSlotManager
 
 from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
@@ -9,11 +9,11 @@ from src.core.business.user_manager import auth_m
 from src.api.helpers.api_requests import get_json
 from werkzeug.exceptions import HTTPException
 
-slot_api_bp = Blueprint("slot_api_bp", __name__, url_prefix="/slots")
-slots_m = SlotManager()
+fabrication_slot_api_bp = Blueprint("fabrication_slot_api_bp", __name__, url_prefix="/slots")
+fabrication_slots_m = FabricationSlotManager()
 
 
-@slot_api_bp.route("/create", methods=["POST"])
+@fabrication_slot_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("slot_create")
 def create_slot():
     values, error = get_json({"beginning", "price", "end", "businessName"})
@@ -24,7 +24,7 @@ def create_slot():
     slots_m.create(**values)
     return SimpleOKResponse("Slot creado correctamente")
 
-@slot_api_bp.route("/all", methods=["GET"])
+@fabrication_slot_api_bp.route("/all", methods=["GET"])
 @auth_m.permission_required("slot_list")
 def all_slots():
     """Obtiene todos los slots."""
@@ -33,7 +33,7 @@ def all_slots():
     
     return SimpleOKResponse(slots=slots)
 
-@slot_api_bp.route("/get", methods=["GET"])
+@fabrication_slot_api_bp.route("/get", methods=["GET"])
 @auth_m.permission_required("slot_show")
 def slot_by_id():
     """Obtiene un slot según su ID."""
@@ -45,7 +45,7 @@ def slot_by_id():
 
     return SimpleOKResponse(slot=slot.get_json())
 
-@slot_api_bp.route("/reserve", methods=["POST"])
+@fabrication_slot_api_bp.route("/reserve", methods=["POST"])
 @auth_m.permission_required("slot_reserve")
 def reserve_slot():
     """Reserva un slot de fabricación"""

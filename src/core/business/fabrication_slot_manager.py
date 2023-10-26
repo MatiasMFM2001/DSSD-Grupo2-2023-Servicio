@@ -1,11 +1,11 @@
-from src.core.database.board import Slot
+from src.core.database.board import FabricationSlot
 from src.core.business.crud_manager import CRUDManager
 
 
-class SlotManager(CRUDManager):
+class FabricationSlotManager(CRUDManager):
     def __init__(self):
         """Constructor de la clase SlotManager."""
-        super().__init__(Slot)
+        super().__init__(FabricationSlot)
     
     def validate(self, **kwargs):
             
