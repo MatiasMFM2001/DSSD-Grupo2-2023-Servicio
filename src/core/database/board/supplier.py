@@ -5,7 +5,6 @@ from src.core.database.resource_managers.physical_resource_manager import (
 from src.core.database.board import Enterprise
 
 class Supplier(Enterprise):
-    __tablename__ = "suppliers"
     materials = db.relationship("Material", back_populates="supplier")
     
     __mapper_args__ = {
@@ -21,5 +20,3 @@ class Supplier(Enterprise):
             PhysicalResourceManager: Resource manager para este modelo.
         """
         return PhysicalResourceManager(db.session, Supplier)
-    
-    

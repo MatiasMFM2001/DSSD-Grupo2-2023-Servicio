@@ -9,7 +9,7 @@ class Enterprise(db.Model):
     name = db.Column(db.String(120), nullable=False)
     location = db.Column(db.String(255), nullable=False)
     
-    type = db.Column(db.String(16))
+    type = db.Column(db.String(8))
 
     __mapper_args__ = {
         "polymorphic_identity": "enterprise",
@@ -23,7 +23,7 @@ class Enterprise(db.Model):
         Returns:
             PhysicalResourceManager: Resource manager para este modelo.
         """
-        return PhysicalResourceManager(db.session, Enterprise)
+        return PhysicalResourceManager(db.session, db.with_polymorphic(Enterprise, "*"))
     
     def get_json(self):
         return {

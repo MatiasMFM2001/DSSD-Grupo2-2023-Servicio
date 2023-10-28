@@ -245,17 +245,17 @@ def initializate_prod_db():
     )
     
     # Fabricantes
-    producer1 = supplier_rm.create(
+    producer1 = producer_rm.create(
         name="Ensambles Don Pepe",
         location="Madrid",
     )
     
-    producer2 = supplier_rm.create(
+    producer2 = producer_rm.create(
         name="Fábrica Fabricio",
         location="Tarragona",
     )
     
-    producer3 = supplier_rm.create(
+    producer3 = producer_rm.create(
         name="Armados Armando",
         location="Barcelona",
     )
@@ -264,6 +264,7 @@ def initializate_prod_db():
     material1 = material_rm.create(
         name="Madera",
         price=465.2,
+        stock=5,
         #arrivalDate=date(2023,12,3),
         supplier=supplier1,
     )
@@ -271,6 +272,7 @@ def initializate_prod_db():
     material2 = material_rm.create(
         name="Metal",
         price=1200.3,
+        stock=10,
         #arrivalDate=date(2023,11,22),
         supplier=supplier2,
     )
@@ -278,6 +280,7 @@ def initializate_prod_db():
     material3 = material_rm.create(
         name="Melamina",
         price=2015.9,
+        stock=15,
         #arrivalDate=date(2023,11,15),
         supplier=supplier3,
     )
