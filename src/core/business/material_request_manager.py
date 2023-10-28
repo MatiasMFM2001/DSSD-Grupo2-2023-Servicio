@@ -1,4 +1,4 @@
-from src.core.database.board import FabricationSlot
+from src.core.database.board import MaterialRequest
 from src.core.business.crud_manager import CRUDManager
 from datetime import date
 
@@ -6,7 +6,7 @@ from datetime import date
 class MaterialRequestManager(CRUDManager):
     def __init__(self):
         """Constructor de la clase SlotManager."""
-        super().__init__(FabricationSlot)
+        super().__init__(MaterialRequest)
     
     def validate(self, **kwargs):         
         amount = kwargs.get("amount")
