@@ -8,12 +8,9 @@ class Material(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    #arrivalDate = db.Column(db.Date, nullable=False)
-    stock = db.Column(db.Integer, nullable=False, default=0)
+    short_unit = db.Column(db.String(8), nullable=False, default="unit")
     
-    supplier_id = db.Column(db.Integer, db.ForeignKey("enterprises.id"))
-    supplier = db.relationship("Supplier", back_populates="materials")
-    
+    suppliers = db.relationship("MaterialSupplier", back_populates="material")
     requests = db.relationship("MaterialRequest", back_populates="material")
     
     @staticmethod

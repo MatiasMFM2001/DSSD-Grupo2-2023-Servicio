@@ -51,6 +51,7 @@ user_rm = User.resource_manager()
 producer_rm = Producer.resource_manager()
 supplier_rm = Supplier.resource_manager()
 material_rm = Material.resource_manager()
+material_supplier_rm = MaterialSupplier.resource_manager()
 fabrication_slot_rm = FabricationSlot.resource_manager()
 
 
@@ -264,27 +265,40 @@ def initializate_prod_db():
     material1 = material_rm.create(
         name="Madera",
         price=465.2,
-        stock=5,
-        #arrivalDate=date(2023,12,3),
-        supplier=supplier1,
     )
     
     material2 = material_rm.create(
         name="Metal",
         price=1200.3,
-        stock=10,
-        #arrivalDate=date(2023,11,22),
-        supplier=supplier2,
     )
     
     material3 = material_rm.create(
         name="Melamina",
         price=2015.9,
-        stock=15,
-        #arrivalDate=date(2023,11,15),
-        supplier=supplier3,
     )
 
+    # Many-to-Many entre Materiales y Proveedores
+    association1 = material_supplier_rm.create(
+        material=material1,
+        supplier=supplier1,
+        stock=5,
+        arrival_date=date(2023, 12, 3),
+    )
+    
+    association2 = material_supplier_rm.create(
+        material=material2,
+        supplier=supplier2,
+        stock=10,
+        arrival_date=date(2023, 11, 22),
+    )
+    
+    association3 = material_supplier_rm.create(
+        material=material3,
+        supplier=supplier3,
+        stock=15,
+        arrival_date=date(2023, 11, 15),
+    )
+    
     # Slots de fabricación
     slot1 = fabrication_slot_rm.create(
         price=82015.9,
@@ -306,5 +320,7 @@ def initializate_prod_db():
         end=date(2024, 1, 30),
         producer=producer3,
     )
+    
+    # Vínculo entre 
 
     print("Finished initializing BD")
