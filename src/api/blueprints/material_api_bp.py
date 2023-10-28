@@ -16,7 +16,7 @@ materials_m = MaterialManager()
 @material_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("material_create")
 def create_material():
-    values, error = get_json({"name", "price", "arrivalDate", "businessName"})
+    values, error = get_json({"name", "price", "stock", "supplier_id"})
 
     if error:
         return error
