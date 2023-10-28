@@ -1,5 +1,3 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from src.core.database.db_instance import db
 
 role_permission = db.Table(
