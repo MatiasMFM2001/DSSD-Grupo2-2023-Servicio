@@ -44,7 +44,7 @@ def force_fields(
             )
         )
     
-    return value_tuple(values)
+    return value_tuple(entries)
 
 def get_json(
     required_fields: Set[str] = set(),
