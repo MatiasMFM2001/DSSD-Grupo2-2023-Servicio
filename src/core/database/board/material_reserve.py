@@ -9,7 +9,7 @@ class MaterialReserve(db.Model):
     amount = db.Column(db.Float, nullable=False)
     total_price = db.Column(db.Float, nullable=False)
     material_id = db.Column(db.Integer, db.ForeignKey("materials.id"), nullable=False)
-    material = db.relationship("Material")
+    material = db.relationship("materials")
 
     @staticmethod
     def resource_manager():
