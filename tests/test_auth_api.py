@@ -12,7 +12,10 @@ def test_login(db_login, db_token):
     template_api_test(
         lambda: client.post(
             path,
-            json={"email": db_login.email, "password": password}
+            json={
+                "email": db_login.email,
+                "password": password
+            }
         ),
         {
             "display_data": {"first_name": "Admin", "last_name": "Numero 1", "roles": ["Administrador"]},
