@@ -116,7 +116,7 @@ def initializate_prod_db():
         "end": ["collection"],
         "sell": ["batch"],
         "receive": ["batch"],
-        "reserve": ["slot", "material"]
+        "reserve": ["slot"]
     }
 
     name_permissions = {}

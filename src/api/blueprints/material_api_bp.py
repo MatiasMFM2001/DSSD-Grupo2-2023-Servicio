@@ -66,16 +66,3 @@ def material_by_name():
         return error
 
     return SimpleOKResponse(material=material[0].get_json())
-
-@material_api_bp.route("/reserve", methods=["POST"])
-@auth_m.permission_required("material_reserve")
-def reserve_slot():
-    """Reserva un material"""
-    material, error = api_validate_id(materials_m, request.args, tuple_name="El material")
-
-    if error:
-        return error
-
-    materials_m.update(material.id, reserved=True)
-
-    return SimpleOKResponse(material=material.get_json())
