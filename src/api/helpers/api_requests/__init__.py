@@ -16,18 +16,12 @@ def to_string(keys: Set[str]):
     return f"{{{', '.join(keys)}}}"
 
 
-def get_json(
+def force_fields(
+    entries: Dict[str, str],
     required_fields: Set[str] = set(),
     allow_extra_keys: bool = False,
-) -> Tuple[Optional[object], Optional[SimpleErrorResponse]]:
-    values = request.get_json(silent=True)
-
-    if values is None:
-        return error_tuple(
-            SimpleErrorResponse(400, "JSON inválido, o sin Content-Type")
-        )
-
-    keys = values.keys()
+):
+    keys = entries.keys()
     keys_str = to_string(keys)
     
     if not required_fields <= keys:
@@ -51,6 +45,19 @@ def get_json(
         )
     
     return value_tuple(values)
+
+def get_json(
+    required_fields: Set[str] = set(),
+    allow_extra_keys: bool = False,
+) -> Tuple[Optional[object], Optional[SimpleErrorResponse]]:
+    values = request.get_json(silent=True)
+
+    if values is None:
+        return error_tuple(
+            SimpleErrorResponse(400, "JSON inválido, o sin Content-Type")
+        )
+
+    return force_fields(values, required_fields, allow_extra_keys)
 
 
 def get_int(base: int = 10) -> Tuple[Optional[int], Optional[SimpleErrorResponse]]:
