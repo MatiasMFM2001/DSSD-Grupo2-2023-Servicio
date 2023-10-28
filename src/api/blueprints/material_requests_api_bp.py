@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 
 from src.core.business.material_request_manager import MaterialRequestManager
+from src.core.business.material_manager import MaterialManager
 
 from src.api.helpers import paginator_to_json, to_json
 from src.api.helpers.api_responses import SimpleOKResponse, SimpleErrorResponse
@@ -11,6 +12,7 @@ from werkzeug.exceptions import HTTPException
 
 material_requests_api_bp = Blueprint("material_requests_api_bp", __name__, url_prefix="/material_requests")
 material_requests_m = MaterialRequestManager()
+material_m = MaterialManager()
 
 
 @material_requests_api_bp.route("/create", methods=["POST"])
@@ -26,10 +28,14 @@ def create_material_request():
 
 @material_requests_api_bp.route("/all", methods=["GET"])
 @auth_m.permission_required("material_request_list")
-def all_material_requests():
+def all_material_requests_by_material():
     """Obtiene todos los material_requests."""
-
-    material_requests = to_json(material_requests_m.filter_get_list())
+    material, error = api_validate_id(material_m, request.args, tuple_name="El material", key="material")
+    
+    if error:
+        return error
+    
+    material_requests = to_json(material_requests_m.filter_get_list(material_id=material.id))
     
     return SimpleOKResponse(material_requests=material_requests)
 
@@ -38,7 +44,7 @@ def all_material_requests():
 def material_request_by_id():
     """Obtiene un material_request según su ID."""
     
-    material_request, error = api_validate_id(material_requests_m, request.args, tuple_name="El material_request")
+    material_request, error = api_validate_id(material_requests_m, request.args, tuple_name="El pedido de material")
 
     if error:
         return error
