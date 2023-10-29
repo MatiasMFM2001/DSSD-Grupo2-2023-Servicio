@@ -39,7 +39,8 @@ def template_api_test(
     send_request,
     expected_data = {},
     expected_objects = [],
-    expected_status = 200
+    expected_status = 200,
+    ignore_keys = set()
 ):
     # Verificar parámetros de la función
     if expected_data and expected_objects:
@@ -50,6 +51,7 @@ def template_api_test(
     
     #print(response.status_code, expected_status)
     # Verificar que el código de estado sea el esperado
+    print(response.status_code)
     assert response.status_code == expected_status
     
     # Si hay múltiples objetos esperados, o los datos esperados son un
@@ -63,6 +65,15 @@ def template_api_test(
     # Si hay un único objeto esperado, guardarlo en una lista
     if expected_data and not expected_objects:
         expected_objects = [expected_data]
+    
+    # Eliminar las claves ignoradas
+    for key in ignore_keys:
+        if isinstance(data, dict):
+            data.pop(key, None)
+        
+        for item in expected_objects:
+            item.pop(key, None)
+        
     
     # Verificar que los datos recibidos sean iguales a los esperados
     assert data in expected_objects
