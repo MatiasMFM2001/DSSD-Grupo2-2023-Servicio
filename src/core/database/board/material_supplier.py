@@ -23,3 +23,11 @@ class MaterialSupplier(db.Model):
             PhysicalResourceManager: Resource manager para este modelo.
         """
         return PhysicalResourceManager(db.session, MaterialSupplier)
+
+    def get_json(self):
+        return {
+            "material_id": self.material_id,
+            "supplier_id": self.supplier_id,
+            "stock": self.stock,
+            "arrival_date": self.arrival_date,
+        }

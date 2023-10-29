@@ -25,7 +25,7 @@ def create_material_supplier():
         return error
 
     material_suppliers_m.create(**values)
-    return SimpleOKResponse("Slot creado correctamente")
+    return SimpleOKResponse("Material_supplier creado correctamente")
 
 @material_supplier_api_bp.route("/all", methods=["GET"])
 @auth_m.permission_required("material_supplier_list")
@@ -36,7 +36,7 @@ def all_material_suppliers_by_material_stock_arrival():
     if error:
         return error
     
-    values, error = force_fields(request.args, {"stock", "arrival_date"})
+    values, error = force_fields(request.args, {"stock", "arrival_date", "material"})
 
     if error:
         return error

@@ -1,9 +1,6 @@
 import pytest
 from src.core.business.user_manager import auth_m
-from src.core.business.fabrication_slot_manager import FabricationSlotManager
 from tests import app, client, template_api_test, db_login, db_token
-
-fabrication_slots_m = FabricationSlotManager()
 
 def test_create(db_token):
     path = "/api/slots/create"

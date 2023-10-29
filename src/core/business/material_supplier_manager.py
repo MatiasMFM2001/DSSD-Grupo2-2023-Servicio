@@ -1,6 +1,11 @@
 from src.core.database.board import MaterialSupplier
 from src.core.business.crud_manager import CRUDManager
-from datetime import date
+from datetime import datetime
+from src.core.business.supplier_manager import SupplierManager
+from src.core.business.material_manager import MaterialManager
+
+supplier_m = SupplierManager()
+material_m = MaterialManager()
 
 
 class MaterialSupplierManager(CRUDManager):
@@ -16,5 +21,15 @@ class MaterialSupplierManager(CRUDManager):
         
         arrival_date = kwargs.get("arrival_date")
         
-        if arrival_date is not None and arrival_date < date.today():
+        if arrival_date is not None and datetime.strptime(arrival_date, "%Y-%m-%d") < datetime.today():
             raise ValueError(f"La fecha de llegada {arrival_date} está en el pasado.")
+        
+        supplier_id = kwargs.get("supplier_id")
+        
+        if supplier_id is not None and not supplier_m.exists(supplier_id):
+            raise ValueError(f"El proveedor de ID {supplier_id} no existe.")
+        
+        material_id = kwargs.get("material_id")
+        
+        if material_id is not None and not material_m.exists(material_id):
+            raise ValueError(f"El material de ID {material_id} no existe.")

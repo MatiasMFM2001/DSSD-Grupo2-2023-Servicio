@@ -1,9 +1,6 @@
 import pytest
 from src.core.business.user_manager import auth_m
-from src.core.business.material_manager import MaterialManager
 from tests import app, client, template_api_test, db_login, db_token
-
-materials_m = MaterialManager()
 
 def test_create(db_token):
     path = "/api/materials/create"
