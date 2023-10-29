@@ -103,3 +103,55 @@ def test_all(db_token):
             ]
         }
     )
+    
+    # Caso 2: Lista vacía por stock insuficiente
+    template_api_test(
+        lambda: client.get(
+            "/api/material_supplier/all",
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "material": 4,
+                "arrival_date": "2024-02-27",
+                "stock": 999
+            }
+        ),
+        {
+            "global_success": [""],
+            "material_suppliers": []
+        }
+    )
+    
+    # Caso 3: Lista vacía por no llegar a la fecha pedida
+    template_api_test(
+        lambda: client.get(
+            "/api/material_supplier/all",
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "material": 4,
+                "arrival_date": "2024-02-20",
+                "stock": 20
+            }
+        ),
+        {
+            "global_success": [""],
+            "material_suppliers": []
+        }
+    )
+    
+    # Caso 3: Lista fallida por material no existente
+    template_api_test(
+        lambda: client.get(
+            "/api/material_supplier/all",
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "material": 999,
+                "arrival_date": "2024-02-27",
+                "stock": 20
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El material de ID 999 no existe"]
+        },
+        expected_status=404
+    )
