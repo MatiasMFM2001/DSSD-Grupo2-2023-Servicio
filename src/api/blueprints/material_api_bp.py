@@ -57,7 +57,7 @@ def material_by_name():
         materials_m,                   
         request.args,
         key="name",
-        tuple_meaning="El material",
+        tuple_name="El material",
         key_meaning="nombre"
     )
 

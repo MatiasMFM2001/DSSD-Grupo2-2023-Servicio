@@ -52,6 +52,7 @@ def template_api_test(
     #print(response.status_code, expected_status)
     # Verificar que el código de estado sea el esperado
     print(response.status_code)
+    print(response.data)
     assert response.status_code == expected_status
     
     # Si hay múltiples objetos esperados, o los datos esperados son un
@@ -61,7 +62,7 @@ def template_api_test(
         expected_objects or
         isinstance(expected_data, (dict, list))
     )
-    print(data)
+    
     # Si hay un único objeto esperado, guardarlo en una lista
     if expected_data and not expected_objects:
         expected_objects = [expected_data]

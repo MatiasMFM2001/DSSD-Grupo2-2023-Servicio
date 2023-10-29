@@ -43,4 +43,120 @@ def test_create(db_token):
         expected_status=400
     )
     
-    #materials_m.remove()
+def test_all(db_token):
+    # Caso 1: Lista obtenida
+    template_api_test(
+        lambda: client.get(
+            "/api/materials/all",
+            headers={"Authorization": f"Bearer {db_token}"}
+        ),
+        {
+            "global_success": [""],
+            "materials": [
+                {
+                    "id": 1,
+                    "name": "Madera",
+                    "price": 465.2,
+                    "short_unit": "unit"
+                },
+                {
+                    "id": 2,
+                    "name": "Metal",
+                    "price": 1200.3,
+                    "short_unit": "unit"
+                },
+                {
+                    "id": 3,
+                    "name": "Melamina",
+                    "price": 2015.9,
+                    "short_unit": "unit"
+                },
+                {
+                    "id": 4,
+                    "name": "Test",
+                    "price": 100.0,
+                    "short_unit": "v"
+                }
+            ]
+        }
+    )
+    
+def test_get_by_id(db_token):
+    path = "/api/materials/getById"
+    
+    
+    # Caso 1: Objeto encontrado
+    template_api_test(
+        lambda: client.get(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "id": 1
+            }
+        ),
+        {
+            "global_success": [""],
+            "material": {
+                "id": 1,
+                "name": "Madera",
+                "price": 465.2,
+                "short_unit": "unit"
+            }
+        }
+    )
+    
+    # Caso 2: Objeto no encontrado
+    template_api_test(
+        lambda: client.get(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "id": 999
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El material de ID 999 no existe"]
+        },
+        expected_status=404
+    )
+
+def test_get_by_name(db_token):
+    path = "/api/materials/getByName"
+    
+    
+    # Caso 1: Objeto encontrado
+    template_api_test(
+        lambda: client.get(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "name": "Madera"
+            }
+        ),
+        {
+            "global_success": [""],
+            "material": {
+                "id": 1,
+                "name": "Madera",
+                "price": 465.2,
+                "short_unit": "unit"
+            }
+        }
+    )
+    
+    # Caso 2: Objeto no encontrado
+    template_api_test(
+        lambda: client.get(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "name": "AGUANTE EL PINCHA"
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El material de nombre AGUANTE EL PINCHA no existe"]
+        },
+        expected_status=404
+    )

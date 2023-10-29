@@ -27,6 +27,6 @@ class Material(db.Model):
             "name": self.name,
             "id": self.id,
             "price": self.price,
-            "stock": self.stock,
+            "short_unit": self.short_unit,
         }
     
