@@ -16,21 +16,19 @@ fabrication_slots_m = FabricationSlotManager()
 @fabrication_slot_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("slot_create")
 def create_slot():
-    values, error = get_json({"beginning", "price", "end", "businessName"})
+    values, error = get_json({"beginning", "price", "end", "producer_id"})
 
     if error:
         return error
 
-    slots_m.create(**values)
+    fabrication_slots_m.create(**values)
     return SimpleOKResponse("Slot creado correctamente")
 
 @fabrication_slot_api_bp.route("/all", methods=["GET"])
 @auth_m.permission_required("slot_list")
 def all_slots():
     """Obtiene todos los slots."""
-
-    slots = to_json(slots_m.filter_get_list())
-    
+    slots = to_json(fabrication_slots_m.filter_get_list())
     return SimpleOKResponse(slots=slots)
 
 @fabrication_slot_api_bp.route("/get", methods=["GET"])
@@ -38,7 +36,7 @@ def all_slots():
 def slot_by_id():
     """Obtiene un slot según su ID."""
     
-    slot, error = api_validate_id(slots_m, request.args, tuple_name="El slot")
+    slot, error = api_validate_id(fabrication_slots_m, request.args, tuple_name="El slot")
 
     if error:
         return error
@@ -49,14 +47,14 @@ def slot_by_id():
 @auth_m.permission_required("slot_reserve")
 def reserve_slot():
     """Reserva un slot de fabricación"""
-    slot, error = api_validate_id(slots_m, request.args, tuple_name="El slot")
+    slot, error = api_validate_id(fabrication_slots_m, request.args, tuple_name="El slot")
 
     if error:
         return error
 
     if slot.reserved:
-        return SimpleErrorResponse(f"El slot de ID {slot.id} ya estaba reservado")
+        return SimpleErrorResponse(400, f"El slot de ID {slot.id} ya estaba reservado")
       
-    slots_m.update(slot.id, reserved=True)
+    fabrication_slots_m.update(slot.id, reserved=True)
 
-    return SimpleOKResponse(slot=slot.get_json())
+    return SimpleOKResponse("Slot reservado correctamente", slot=slot.get_json())

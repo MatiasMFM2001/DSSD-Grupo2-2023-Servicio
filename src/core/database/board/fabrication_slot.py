@@ -9,6 +9,7 @@ class FabricationSlot(db.Model):
     price = db.Column(db.Float, nullable=False)
     beginning = db.Column(db.Date, nullable=False)
     end = db.Column(db.Date, nullable=False)
+    reserved = db.Column(db.Boolean, nullable=False, default=False)
     
     producer_id = db.Column(db.Integer, db.ForeignKey("enterprises.id"))
     producer = db.relationship("Producer", back_populates="slots")
