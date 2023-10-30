@@ -95,6 +95,7 @@ def test_all(db_token):
             "global_success": [""],
             "material_suppliers": [
                 {
+                    "id": 4,
                     "arrival_date": "Thu, 22 Feb 2024 00:00:00 GMT",
                     "material_id": 4,
                     "stock": 100,
@@ -152,6 +153,56 @@ def test_all(db_token):
         {
             "field_errors": {},
             "global_errors": ["El material de ID 999 no existe"]
+        },
+        expected_status=404
+    )
+
+def test_reserve(db_token):
+    path = "/api/material_supplier/reserve"
+    
+    
+    # Caso 1: Material_supplier reservado correctamente
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "id": 4,
+            }
+        ),
+        {
+            "global_success": ["Material_supplier reservado correctamente"],
+        }
+    )
+    
+    # Caso 2: Material_supplier ya reservado
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "id": 4
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El material_supplier de ID 4 ya estaba reservado"]
+        },
+        expected_status=400
+    )
+    
+    # Caso 3: Material_supplier no encontrado
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            query_string={
+                "id": 999
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El material_supplier de ID 999 no existe"]
         },
         expected_status=404
     )

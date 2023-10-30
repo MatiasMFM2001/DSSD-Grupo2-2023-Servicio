@@ -58,8 +58,8 @@ def reserve_material_supplier():
         return error
 
     if material_supplier.reserved:
-        return SimpleErrorResponse(f"El material_supplier de ID {material_supplier.id} ya estaba reservado")
+        return SimpleErrorResponse(400, f"El material_supplier de ID {material_supplier.id} ya estaba reservado")
       
     material_suppliers_m.update(material_supplier.id, reserved=True)
 
-    return SimpleOKResponse(material_supplier=material_supplier.get_json())
+    return SimpleOKResponse("Material_supplier reservado correctamente")

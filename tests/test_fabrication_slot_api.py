@@ -200,4 +200,3 @@ def test_reserve(db_token):
         },
         expected_status=404
     )
-
