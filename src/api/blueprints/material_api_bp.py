@@ -16,7 +16,7 @@ materials_m = MaterialManager()
 @material_api_bp.route("/create", methods=["POST"])
 @auth_m.permission_required("material_create")
 def create_material():
-    values, error = get_json({"name", "price", "arrivalDate", "businessName"})
+    values, error = get_json({"name", "price", "short_unit"})
 
     if error:
         return error
@@ -30,7 +30,6 @@ def all_materials():
     """Obtiene todos los materiales."""
 
     materials = to_json(materials_m.filter_get_list())
-    
     return SimpleOKResponse(materials=materials)
 
 @material_api_bp.route("/getById", methods=["GET"])
@@ -58,7 +57,7 @@ def material_by_name():
         materials_m,                   
         request.args,
         key="name",
-        tuple_meaning="El material",
+        tuple_name="El material",
         key_meaning="nombre"
     )
 
