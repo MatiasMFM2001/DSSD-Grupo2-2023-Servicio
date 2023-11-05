@@ -1,6 +1,6 @@
 from src.core.database.db_instance import db
-from src.core.database.resource_managers.physical_resource_manager import (
-    PhysicalResourceManager,
+from src.core.database.resource_managers.material_slot_resource_manager import (
+    MaterialSlotResourceManager,
 )
 
 class FabricationSlot(db.Model):
@@ -21,7 +21,7 @@ class FabricationSlot(db.Model):
         Returns:
             PhysicalResourceManager: Resource manager para este modelo.
         """
-        return PhysicalResourceManager(db.session, FabricationSlot)
+        return MaterialSlotResourceManager(db.session, FabricationSlot)
     
     def get_json(self):
         return {
