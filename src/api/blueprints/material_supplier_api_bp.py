@@ -43,6 +43,7 @@ def all_material_suppliers_by_material_stock_arrival():
     
     material_suppliers = to_json(material_suppliers_m.filter_get_list(
         MaterialSupplier.material_id == material.id,
+        MaterialSupplier.reserved == False,
         MaterialSupplier.stock >= values["stock"],
         MaterialSupplier.arrival_date <= values["arrival_date"],
     ))
@@ -61,5 +62,24 @@ def reserve_material_supplier():
         return SimpleErrorResponse(400, f"El material_supplier de ID {material_supplier.id} ya estaba reservado")
       
     material_suppliers_m.update(material_supplier.id, reserved=True)
-
     return SimpleOKResponse("Material_supplier reservado correctamente")
+
+@material_supplier_api_bp.route("/reserve_all", methods=["POST"])
+@auth_m.permission_required("material_supplier_reserve")
+def atomic_reserve_all():
+    values, error = get_json({"material_ids", "slot_ids"})
+
+    if error:
+        return error
+    
+    material_ids = values["material_ids"]
+    slot_ids = values["slot_ids"]
+    
+    if not isinstance(material_ids, list):
+        return SimpleErrorResponse(400, "material_ids no es una lista")
+    
+    if not isinstance(slot_ids, list):
+        return SimpleErrorResponse(400, "slot_ids no es una lista")
+    
+    material_suppliers_m.atomic_reserve_all(material_ids, slot_ids)
+    return SimpleOKResponse("Todo reservado correctamente")

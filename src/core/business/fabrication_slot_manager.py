@@ -27,3 +27,6 @@ class FabricationSlotManager(CRUDManager):
         
         if producer_id is not None and not producer_m.exists(producer_id):
             raise ValueError(f"El productor de ID {producer_id} no existe.")
+
+    def atomic_reserve_all(self, material_ids, slot_ids):
+        return self.database.atomic_reserve_all(material_ids, slot_ids)

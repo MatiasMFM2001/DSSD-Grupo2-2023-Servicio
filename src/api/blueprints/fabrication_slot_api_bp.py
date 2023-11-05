@@ -28,7 +28,7 @@ def create_slot():
 @auth_m.permission_required("slot_list")
 def all_slots():
     """Obtiene todos los slots."""
-    slots = to_json(fabrication_slots_m.filter_get_list())
+    slots = to_json(fabrication_slots_m.filter_by_get_list(reserved=False))
     return SimpleOKResponse(slots=slots)
 
 @fabrication_slot_api_bp.route("/get", methods=["GET"])

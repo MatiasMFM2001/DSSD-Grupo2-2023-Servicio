@@ -33,3 +33,6 @@ class MaterialSupplierManager(CRUDManager):
         
         if material_id is not None and not material_m.exists(material_id):
             raise ValueError(f"El material de ID {material_id} no existe.")
+    
+    def atomic_reserve_all(self, material_ids, slot_ids):
+        return self.database.atomic_reserve_all(material_ids, slot_ids)
