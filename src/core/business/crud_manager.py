@@ -52,7 +52,7 @@ class CRUDManager(BusinessManager):
         return self.database.get(id, include_inactive)
 
     def get_all(self, id_list, include_inactive=False):
-        return [self.get(id, include_inactive) for id in id_list]
+        return self.database.get_all(id_list, include_inactive)
     
     def update(self, id, include_inactives=False, **kwargs):
         """Actualiza una instancia en la base de datos con los valores especificados.

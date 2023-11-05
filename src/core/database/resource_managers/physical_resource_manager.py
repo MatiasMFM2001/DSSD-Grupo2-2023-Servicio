@@ -12,31 +12,31 @@ class PhysicalResourceManager:
         self.model_class = model_class
         self.instantiator = instantiator or model_class
 
-    def query(self):
+    def query(self, model_class=None):
         """Retorna la query para obtener una instancia de este modelo.
 
         Returns:
             Query: Query para obtener una instancia de este modelo.
         """
-        return self.dbs.query(self.model_class)
+        return self.dbs.query(model_class or self.model_class)
 
-    def filter(self, *predicates):
+    def filter(self, model_class=None, *predicates):
         """Retorna la query para obtener instancias de este modelo que cumplan con los predicados dados.
 
         Returns:
             Query: Query para obtener instancias de este modelo que cumplan con los predicados dados.
         """
-        return self.query().filter(*predicates)
+        return self.query(model_class).filter(*predicates)
 
-    def filter_by(self, **kwargs):
+    def filter_by(self, model_class=None, **kwargs):
         """Retorna la query para obtener instancias de este modelo que cumplan con los criterios dados.
 
         Returns:
             Query: Query para obtener instancias de este modelo que cumplan con los criterios dados.
         """
-        return self.query().filter_by(**kwargs)
+        return self.query(model_class).filter_by(**kwargs)
 
-    def query_for(self, id, include_inactives=False):
+    def query_for(self, id, include_inactives=False, model_class=None):
         """Retorna la query para obtener una instancia de este modelo con el identificador dado.
 
         Args:
@@ -45,7 +45,7 @@ class PhysicalResourceManager:
         Returns:
             Query: Query para obtener una instancia de este modelo con el identificador dado.
         """
-        return self.filter_by(id=id)
+        return self.filter_by(model_class, id=id)
 
     def commit(self):
         """Realiza el commit de la sesión de la base de datos."""
@@ -71,7 +71,7 @@ class PhysicalResourceManager:
 
         return created
 
-    def get(self, id, include_inactives=False):
+    def get(self, id, include_inactives=False, model_class=None):
         """Retorna una instancia de este modelo con el identificador dado.
 
         Args:
@@ -80,8 +80,11 @@ class PhysicalResourceManager:
         Returns:
             Model: Instancia de este modelo con el identificador dado.
         """
-        return self.query_for(id).one()
+        return self.query_for(id, include_inactives, model_class).one()
 
+    def get_all(self, id_list, include_inactives=False, model_class=None):
+        return [self.get(id, include_inactive, model_class) for id in id_list]
+    
     def for_each(self, query, function):
         """Ejecuta la función dada para cada elemento de la query dada.
 
