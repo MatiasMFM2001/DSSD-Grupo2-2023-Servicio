@@ -20,6 +20,8 @@ tags:
     description: Todo lo necesario para pedir materiales
   - name: slots
     description: Todo lo necesario para reservar slots de fabricación
+  - name: tick
+    description: Todo lo relacionado a los ticks
 
 paths:
   /login:
@@ -333,6 +335,27 @@ paths:
       security:
         - bearerAuth: []
 
+  /tick/percentage:
+    get:
+      tags:
+        - tick
+      summary: Devuelve porcentaje
+      description: Devuelve un porcentaje que es equivalente al avance en un proceso. Valores entre 0.0 y 10.0 %.
+      operationId: percentage
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Percentage'          
+        '400':
+          description: Something went wrong
+      security:
+        - bearerAuth: []
+
 components:
   schemas:
 
@@ -416,7 +439,16 @@ components:
           example: Ensambles Don Pepe
       xml:
         name: slot 
-        
+
+    Percentage:
+      type: object
+      properties:
+        percentage:
+          type: number
+          format: float
+          example: 6.3
+      xml:
+        name: percentage
         
   requestBodies:
   

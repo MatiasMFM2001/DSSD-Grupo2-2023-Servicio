@@ -111,11 +111,11 @@ def initializate_prod_db():
         "logout": ["private"],
         "profile_edit": ["private"],
         
-        "list": ["user", "category", "collection", "furniture", "furniture_file", "batch", "furniture_material", "material", "slot", "material_supplier",],
-        "show": ["home", "furniture_file", "collection", "furniture", "batch", "furniture_material", "slot", "material",],
-        #"update": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material", "slot",],
-        "create": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material", "material", "slot", "material_supplier",],
-        #"destroy": ["user", "category", "collection", "furniture", "furniture_file", "slot",],
+        "list": ["user", "category", "collection", "furniture", "furniture_file", "batch", "furniture_material", "material", "slot", "material_supplier", "tick",],
+        "show": ["home", "furniture_file", "collection", "furniture", "batch", "furniture_material", "slot", "material", "tick",],
+        #"update": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material", "slot", "tick",],
+        "create": ["user", "category", "collection", "furniture", "furniture_file", "furniture_material", "material", "slot", "material_supplier", "tick",],
+        #"destroy": ["user", "category", "collection", "furniture", "furniture_file", "slot", "tick",],
         
         "end": ["collection"],
         "sell": ["batch"],
