@@ -41,12 +41,8 @@ def all_material_suppliers_by_material_stock_arrival():
     if error:
         return error
     
-    material_suppliers = to_json(material_suppliers_m.filter_get_list(
-        MaterialSupplier.material_id == material.id,
-        MaterialSupplier.reserved == False,
-        MaterialSupplier.stock >= values["stock"],
-        MaterialSupplier.arrival_date <= values["arrival_date"],
-    ))
+    material_suppliers = to_json(material_suppliers_m.filter_available_get_list(material.id, values["stock"], values["arrival_date"]))
+    
     return SimpleOKResponse(material_suppliers=material_suppliers)
 
 @material_supplier_api_bp.route("/reserve", methods=["POST"])
