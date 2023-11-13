@@ -45,6 +45,32 @@ def all_material_suppliers_by_material_stock_arrival():
     
     return SimpleOKResponse(material_suppliers=material_suppliers)
 
+@material_supplier_api_bp.route("/multiple", methods=["GET"])
+@auth_m.permission_required("material_supplier_list")
+def multiple_material_suppliers_by_material_stock_arrival():
+    """Obtiene todos los material_suppliers."""
+    values, error = force_fields(request.args, {"material_stocks", "arrival_date"})
+
+    if error:
+        return error
+    
+    material_stocks = values["material_stocks"]
+    arrival_date = values["arrival_date"]
+    
+    if not isinstance(material_stocks, dict):
+        return SimpleErrorResponse(400, "ERROR: El valor de 'material_stocks' no es un diccionario")
+    
+    out = {}
+    
+    for material_id, min_stock in material_stocks.entries():
+        out[material_id] = to_json(material_suppliers_m.filter_available_get_list(
+            material_id,
+            min_stock,
+            arrival_date
+        ))
+
+    return SimpleOKResponse(material_suppliers=out)
+
 @material_supplier_api_bp.route("/reserve", methods=["POST"])
 @auth_m.permission_required("material_supplier_reserve")
 def reserve_material_supplier():
