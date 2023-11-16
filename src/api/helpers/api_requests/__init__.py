@@ -57,6 +57,11 @@ def get_json(
             SimpleErrorResponse(400, "JSON inválido, o sin Content-Type")
         )
 
+    if not isinstance(values, dict):
+        return error_tuple(
+            SimpleErrorResponse(400, f"El JSON enviado no es un diccionario: {values}")
+        )
+    
     return force_fields(values, required_fields, allow_extra_keys)
 
 
