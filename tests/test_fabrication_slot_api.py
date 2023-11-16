@@ -60,7 +60,8 @@ def test_all(db_token):
                         "id": 4,
                         "location": "Madrid",
                         "name": "Ensambles Don Pepe"
-                    }
+                    },
+                    "fabrication_progress": 0.0
                 },
                 {
                     "beginning": "Fri, 03 Nov 2023 00:00:00 GMT",
@@ -70,7 +71,8 @@ def test_all(db_token):
                         "id": 5,
                         "location": "Tarragona",
                         "name": "Fábrica Fabricio"
-                    }
+                    },
+                    "fabrication_progress": 0.0
                 },
                 {
                     "beginning": "Thu, 09 Nov 2023 00:00:00 GMT",
@@ -80,7 +82,8 @@ def test_all(db_token):
                         "id": 6,
                         "location": "Barcelona",
                         "name": "Armados Armando"
-                    }
+                    },
+                    "fabrication_progress": 0.0
                 },
                 {
                     "beginning": "Thu, 22 Feb 2024 00:00:00 GMT",
@@ -90,7 +93,8 @@ def test_all(db_token):
                         "id": 4,
                         "location": "Madrid",
                         "name": "Ensambles Don Pepe"
-                    }
+                    },
+                    "fabrication_progress": 0.0
                 }
             ]
         }
@@ -120,7 +124,8 @@ def test_get_by_id(db_token):
                     "id": 4,
                     "location": "Madrid",
                     "name": "Ensambles Don Pepe"
-                }
+                },
+                "fabrication_progress": 0.0
             }
         }
     )
@@ -164,7 +169,8 @@ def test_reserve(db_token):
                     "id": 4,
                     "location": "Madrid",
                     "name": "Ensambles Don Pepe"
-                }
+                },
+                "fabrication_progress": 0.0
             }
         }
     )

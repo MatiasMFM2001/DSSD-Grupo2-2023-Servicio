@@ -10,6 +10,7 @@ class FabricationSlot(db.Model):
     beginning = db.Column(db.Date, nullable=False)
     end = db.Column(db.Date, nullable=False)
     reserved = db.Column(db.Boolean, nullable=False, default=False)
+    fabrication_progress = db.Column(db.Float, nullable=False, default=0.0)
     
     producer_id = db.Column(db.Integer, db.ForeignKey("enterprises.id"))
     producer = db.relationship("Producer", back_populates="slots")
@@ -29,5 +30,6 @@ class FabricationSlot(db.Model):
             "price": self.price,
             "beginning": self.beginning,
             "end": self.end,
-            "producer": self.producer.get_json()
+            "fabrication_progress": self.fabrication_progress,
+            "producer": self.producer.get_json(),
         }
