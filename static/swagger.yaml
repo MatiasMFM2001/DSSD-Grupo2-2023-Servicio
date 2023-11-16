@@ -290,8 +290,8 @@ paths:
     get:
       tags:
         - slots
-      summary: Lista a todos los materiales disponibles
-      description: Devuelve a todos los materiales disponibles en la API. Requiere `slot_all`.
+      summary: Lista a todos los slots disponibles
+      description: Devuelve a todos los slots disponibles en la API. Requiere `slot_all`.
       operationId: allSlots
       responses:
         '200':
