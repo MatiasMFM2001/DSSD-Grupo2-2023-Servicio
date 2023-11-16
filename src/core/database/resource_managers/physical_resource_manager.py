@@ -1,3 +1,5 @@
+from flask_sqlalchemy.model import DefaultMeta
+
 """Abstracción de accesos a una tabla de la BD, donde se realizan bajas físicas."""
 class PhysicalResourceManager:
     def __init__(self, dbsession, model_class, instantiator=None):
@@ -26,6 +28,9 @@ class PhysicalResourceManager:
         Returns:
             Query: Query para obtener instancias de este modelo que cumplan con los predicados dados.
         """
+        if not isinstance(model_class, (DefaultMeta, type(None))):
+            return self.filter(None, *predicates)
+        
         return self.query(model_class).filter(*predicates)
 
     def filter_by(self, model_class=None, **kwargs):
