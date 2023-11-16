@@ -38,9 +38,4 @@ class MaterialSupplierManager(CRUDManager):
         return self.database.atomic_reserve_all(material_ids, slot_ids)
 
     def filter_available_get_list(self, material_id, min_stock, max_date):
-        return self.filter_get_list(
-            MaterialSupplier.material_id == material_id,
-            MaterialSupplier.reserved == False,
-            MaterialSupplier.stock >= min_stock,
-            MaterialSupplier.arrival_date <= max_date,
-        )
+        return self.filter(MaterialSupplier.material_id == material_id).filter(MaterialSupplier.reserved == False).filter(MaterialSupplier.stock >= min_stock).filter(MaterialSupplier.arrival_date <= max_date)

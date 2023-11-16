@@ -40,7 +40,7 @@ class DevelopmentConfig(Config):
         f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
     SCHEDULER_TIMEZONE = "America/Argentina/Buenos_Aires"
-    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_ECHO = True
     UPLOAD_FOLDER = "public/images/uploads"
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     BACKEND_URI = "http://localhost:5000"
