@@ -67,7 +67,7 @@ def multiple_material_suppliers_by_material_stock_arrival():
     
     for material_id, min_stock in material_stocks.items():
         out[material_id] = to_json(material_suppliers_m.filter_available_get_list(
-            int(material_id),
+            material_id,
             min_stock,
             arrival_date
         ))
