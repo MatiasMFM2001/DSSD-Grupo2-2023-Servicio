@@ -232,7 +232,7 @@ paths:
   /materials/reserve:
     post:
       tags:
-        - slots
+        - materials
       summary: Reservar un material existente
       description: Reservar un material existente. Requiere `material_reserve`.
       operationId: reserveMaterials
