@@ -39,7 +39,6 @@ class MaterialSupplierManager(CRUDManager):
 
     def filter_available_get_list(self, material_id, min_stock, max_date):
         return self.filter_get_list(
-            None,
             MaterialSupplier.material_id == material_id,
             MaterialSupplier.reserved == False,
             MaterialSupplier.stock >= min_stock,
