@@ -206,3 +206,63 @@ def test_reserve(db_token):
         },
         expected_status=404
     )
+    
+def test_multiple(db_token):
+    path = "/api/material_supplier/multiple"
+    
+    
+    # Caso 1: Lista obtenida
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "material_stocks": {"4": 20},
+                "arrival_date": "2024-02-27",
+            }
+        ),
+        {
+            "global_success": [""],
+            "material_suppliers": [
+                {
+                    "id": 4,
+                    "arrival_date": "Thu, 22 Feb 2024 00:00:00 GMT",
+                    "material_id": 4,
+                    "stock": 100,
+                    "supplier_id": 1
+                }
+            ]
+        }
+    )
+    
+    # Caso 2: Lista vacía por stock insuficiente
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "material_stocks": {"4": 999},
+                "arrival_date": "2024-02-27",
+            }
+        ),
+        {
+            "global_success": [""],
+            "material_suppliers": []
+        }
+    )
+    
+    # Caso 3: Lista vacía por no llegar a la fecha pedida
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "material_stocks": {"4": 20},
+                "arrival_date": "2024-02-20",
+            }
+        ),
+        {
+            "global_success": [""],
+            "material_suppliers": []
+        }
+    )
