@@ -45,11 +45,11 @@ def all_material_suppliers_by_material_stock_arrival():
     
     return SimpleOKResponse(material_suppliers=material_suppliers)
 
-@material_supplier_api_bp.route("/multiple", methods=["GET"])
+@material_supplier_api_bp.route("/multiple", methods=["POST"])
 @auth_m.permission_required("material_supplier_list")
 def multiple_material_suppliers_by_material_stock_arrival():
     """Obtiene todos los material_suppliers."""
-    values, error = force_fields(request.args, {"material_stocks", "arrival_date"})
+    values, error = get_json({"material_stocks", "arrival_date"})
 
     if error:
         return error
