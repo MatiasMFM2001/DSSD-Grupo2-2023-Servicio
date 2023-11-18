@@ -260,6 +260,21 @@ def initializate_prod_db():
         name="Armados Armando",
         location="Barcelona",
     )
+
+    producer4 = producer_rm.create(
+        name="Industrias Inés",
+        location="Valencia",
+    )
+
+    producer5 = producer_rm.create(
+        name="Construcciones Carlos",
+        location="Sevilla",
+    )
+
+    producer6 = producer_rm.create(
+        name="Textiles Teresa",
+        location="Bilbao",
+    )
     
     # Materiales
     material1 = material_rm.create(
@@ -275,6 +290,21 @@ def initializate_prod_db():
     material3 = material_rm.create(
         name="Melamina",
         price=2015.9,
+    )
+
+    material4 = material_rm.create(
+        name="Plástico",
+        price=800.0,
+    )
+
+    material5 = material_rm.create(
+        name="Vidrio",
+        price=1500.75,
+    )
+
+    material6 = material_rm.create(
+        name="Cerámica",
+        price=120.5,
     )
 
     # Many-to-Many entre Materiales y Proveedores
@@ -298,6 +328,71 @@ def initializate_prod_db():
         stock=15,
         arrival_date=date(2023, 11, 15),
     )
+
+    association4 = material_supplier_rm.create(
+        material=material4,
+        supplier=supplier1,
+        stock=8,
+        arrival_date=date(2023, 12, 10),
+    )
+
+    association5 = material_supplier_rm.create(
+        material=material5,
+        supplier=supplier2,
+        stock=12,
+        arrival_date=date(2023, 11, 30),
+    )
+
+    association6 = material_supplier_rm.create(
+        material=material6,
+        supplier=supplier3,
+        stock=20,
+        arrival_date=date(2023, 11, 18),
+    )
+    
+    association7 = material_supplier_rm.create(
+        material=material1,
+        supplier=supplier2,
+        stock=3,
+        arrival_date=date(2023, 12, 5),
+    )
+
+    association8 = material_supplier_rm.create(
+        material=material2,
+        supplier=supplier3,
+        stock=7,
+        arrival_date=date(2023, 12, 8),
+    )
+
+    association9 = material_supplier_rm.create(
+        material=material3,
+        supplier=supplier1,
+        stock=10,
+        arrival_date=date(2023, 12, 12),
+    )
+
+    association10 = material_supplier_rm.create(
+        material=material4,
+        supplier=supplier2,
+        stock=5,
+        arrival_date=date(2023, 12, 2),
+    )
+
+    association11 = material_supplier_rm.create(
+        material=material5,
+        supplier=supplier3,
+        stock=15,
+        arrival_date=date(2023, 12, 7),
+    )
+
+    association12 = material_supplier_rm.create(
+        material=material6,
+        supplier=supplier1,
+        stock=18,
+        arrival_date=date(2023, 12, 14),
+    )
+
+    
     
     # Slots de fabricación
     slot1 = fabrication_slot_rm.create(
