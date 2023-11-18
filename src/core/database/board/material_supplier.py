@@ -29,7 +29,7 @@ class MaterialSupplier(db.Model):
         return {
             "id": self.id,
             "material_id": self.material_id,
-            "supplier_id": self.supplier_id,
             "stock": self.stock,
             "arrival_date": self.arrival_date,
+            "supplier": self.supplier.get_json()
         }
