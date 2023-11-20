@@ -51,7 +51,7 @@ class LogicalResourceManager(PhysicalResourceManager):
         """
         return self.query(include_inactives=include_inactives).filter_by(**kwargs)
 
-    def query_for(self, id, include_inactives=False):
+    def query_for(self, id, include_inactives=False, model_class=None):
         """Retorna la query para obtener una instancia de este modelo con el identificador dado.
 
         Args:

@@ -119,7 +119,7 @@ class PhysicalResourceManager:
         """
         self.for_each(query, self.dbs.delete)
 
-    def exists(self, query):
+    def exists(self, query, include_inactives=False, model_class=None):
         """Retorna si existe al menos un elemento en la query dada.
 
         Args:
@@ -129,10 +129,16 @@ class PhysicalResourceManager:
             bool: True si existe al menos un elemento en la query dada, False en caso contrario.
         """
         if type(query) == int:
-            query = self.query_for(query)
+            query = self.query_for(query, include_inactives, model_class)
 
         return query.first() is not None
 
+    def exists_all(self, id_list, include_inactives=False, model_class=None):
+        return {
+            id: self.exists(id, include_inactives, model_class) 
+            for id in id_list
+        }
+    
     def update(self, id, include_inactives=False, **kwargs):
         """Actualiza una instancia de este modelo con el identificador dado.
 

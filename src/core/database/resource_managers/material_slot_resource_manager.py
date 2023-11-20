@@ -1,10 +1,17 @@
 from src.core.database.resource_managers.logical_resource_manager import (
     PhysicalResourceManager,
 )
+from werkzeug.exceptions import NotFound
 
 class MaterialSlotResourceManager(PhysicalResourceManager):
-    def reserve_all(self, objects, tuple_name):
-        for selec in objects:
+    def reserve_all(self, object_ids, tuple_name, model_class):
+        exists_by_id = self.exists_all(object_ids, model_class=model_class)
+        
+        for id, result in exists_by_id.items():
+            if not result:
+                raise NotFound(f"{tuple_name} de ID {id} no existe")
+        
+        for selec in self.get_all(object_ids, model_class=model_class):
             if selec.reserved:
                 raise ValueError(f"{tuple_name} de ID {selec.id} ya estaba reservada")
 
@@ -15,8 +22,7 @@ class MaterialSlotResourceManager(PhysicalResourceManager):
         from src.core.database.board import MaterialSupplier, FabricationSlot
         
         #with self.dbs.begin():
-        materials = self.get_all(material_ids, MaterialSupplier)
-        slots = self.get_all(slot_ids, FabricationSlot)
+        self.reserve_all(material_ids, "El MaterialSupplier", MaterialSupplier)
+        self.reserve_all(slot_ids, "El Slot de fabricación", FabricationSlot)
         
-        self.reserve_all(materials, "El MaterialSupplier")
-        self.reserve_all(slots, "El Slot de fabricación")
+        self.commit()
