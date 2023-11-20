@@ -88,7 +88,7 @@ class PhysicalResourceManager:
         return self.query_for(id, include_inactives, model_class).one()
 
     def get_all(self, id_list, include_inactives=False, model_class=None):
-        return [self.get(id, include_inactive, model_class) for id in id_list]
+        return [self.get(id, include_inactives, model_class) for id in id_list]
     
     def for_each(self, query, function):
         """Ejecuta la función dada para cada elemento de la query dada.
