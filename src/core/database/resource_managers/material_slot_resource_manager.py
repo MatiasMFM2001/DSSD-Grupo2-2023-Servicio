@@ -21,8 +21,8 @@ class MaterialSlotResourceManager(PhysicalResourceManager):
     def atomic_reserve_all(self, material_ids, slot_ids):
         from src.core.database.board import MaterialSupplier, FabricationSlot
         
-        #with self.dbs.begin():
-        self.reserve_all(material_ids, "El MaterialSupplier", MaterialSupplier)
-        self.reserve_all(slot_ids, "El Slot de fabricación", FabricationSlot)
-        
+        with self.dbs.begin_nested():
+            self.reserve_all(material_ids, "El MaterialSupplier", MaterialSupplier)
+            self.reserve_all(slot_ids, "El Slot de fabricación", FabricationSlot)
+
         self.commit()
