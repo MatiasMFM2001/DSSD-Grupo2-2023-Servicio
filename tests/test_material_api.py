@@ -70,6 +70,25 @@ def test_all(db_token):
                 },
                 {
                     "id": 4,
+                    "name": "Plástico",
+                    "price": 800.0,
+                    "short_unit": "unit"
+                },
+                {
+                    "id": 5,
+                    "name": "Vidrio",
+                    "price": 1500.75,
+                    "short_unit": "unit"
+                },
+                {
+                    "id": 6,
+                    "name": "Cerámica",
+                    "price": 120.5,
+                    "short_unit":
+                    "unit"
+                }, 
+                {
+                    "id": 7,
                     "name": "Test",
                     "price": 100.0,
                     "short_unit": "v"

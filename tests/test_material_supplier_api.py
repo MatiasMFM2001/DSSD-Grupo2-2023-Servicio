@@ -95,11 +95,15 @@ def test_all(db_token):
             "global_success": [""],
             "material_suppliers": [
                 {
-                    "id": 4,
+                    "id": 13,
                     "arrival_date": "Thu, 22 Feb 2024 00:00:00 GMT",
                     "material_id": 4,
                     "stock": 100,
-                    "supplier_id": 1
+                    "supplier": {
+                        "id": 1,
+                        "location": "Madrid",
+                        "name": "Maderera San Jorge"
+                    }
                 }
             ]
         }
@@ -176,11 +180,15 @@ def test_multiple_single(db_token):
             "material_suppliers": {
                 "4": [
                     {
-                        "id": 4,
+                        "id": 13,
                         "arrival_date": "Thu, 22 Feb 2024 00:00:00 GMT",
                         "material_id": 4,
                         "stock": 100,
-                        "supplier_id": 1
+                        "supplier": {
+                            "id": 1,
+                            "location": "Madrid",
+                            "name": "Maderera San Jorge"
+                        }
                     }
                 ]
             }
@@ -249,7 +257,22 @@ def test_multiple_multiple(db_token):
                         "id": 1,
                         "material_id": 1,
                         "stock": 5,
-                        "supplier_id": 1,
+                        "supplier": {
+                            "id": 1,
+                            "location": "Madrid",
+                            "name": "Maderera San Jorge"
+                        }
+                    },
+                    {
+                        "arrival_date": "Tue, 05 Dec 2023 00:00:00 GMT",
+                        "id": 7,
+                        "material_id": 1,
+                        "stock": 3,
+                        "supplier": {
+                            "id": 2,
+                            "location": "Tarragona",
+                            "name": "Herrería Hefesto"
+                        }
                     }
                 ],
                 "3": [
@@ -258,7 +281,22 @@ def test_multiple_multiple(db_token):
                         "id": 3,
                         "material_id": 3,
                         "stock": 15,
-                        "supplier_id": 3,
+                        "supplier": {
+                            "id": 3,
+                            "location": "Barcelona",
+                            "name": "Melamina de Nina"
+                        }
+                    },
+                    {
+                        "arrival_date": "Tue, 12 Dec 2023 00:00:00 GMT",
+                        "id": 9,
+                        "material_id": 3,
+                        "stock": 10,
+                        "supplier": {
+                            "id": 1,
+                            "location": "Madrid",
+                            "name": "Maderera San Jorge"
+                        }
                     }
                 ]
             }
@@ -287,7 +325,22 @@ def test_multiple_multiple(db_token):
                         "id": 1,
                         "material_id": 1,
                         "stock": 5,
-                        "supplier_id": 1,
+                        "supplier": {
+                            "id": 1,
+                            "location": "Madrid",
+                            "name": "Maderera San Jorge"
+                        }
+                    },
+                    {
+                        "arrival_date": "Tue, 05 Dec 2023 00:00:00 GMT",
+                        "id": 7,
+                        "material_id": 1,
+                        "stock": 3,
+                        "supplier": {
+                            "id": 2,
+                            "location": "Tarragona",
+                            "name": "Herrería Hefesto"
+                        }
                     }
                 ],
                 "3": []
