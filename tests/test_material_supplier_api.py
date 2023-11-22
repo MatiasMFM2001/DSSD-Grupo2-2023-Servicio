@@ -451,7 +451,7 @@ def test_reserve_all(db_token):
         ),
         {
             "field_errors": {},
-            "global_errors": ["El MaterialSupplier de ID 1 ya estaba reservada"]
+            "global_errors": ["El MaterialSupplier de ID 1 ya estaba en el estado de reserva True"]
         },
         expected_status=400
     )
@@ -468,7 +468,93 @@ def test_reserve_all(db_token):
         ),
         {
             "field_errors": {},
-            "global_errors": ["El Slot de fabricación de ID 3 ya estaba reservada"]
+            "global_errors": ["El Slot de fabricación de ID 3 ya estaba en el estado de reserva True"]
+        },
+        expected_status=400
+    )
+    
+    # Caso 4: Material_supplier no encontrado
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "material_ids": [999],
+                "slot_ids": [],
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El MaterialSupplier de ID 999 no existe"]
+        },
+        expected_status=404
+    )
+    
+    # Caso 4: Slot no encontrado
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "material_ids": [],
+                "slot_ids": [999],
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El Slot de fabricación de ID 999 no existe"]
+        },
+        expected_status=404
+    )
+
+def test_unreserve_all(db_token):
+    path = "/api/material_supplier/un_reserve_all"
+    
+    # Caso 1: Todos reservados correctamente
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "material_ids": [1, 3],
+                "slot_ids": [3],
+            }
+        ),
+        {
+            "global_success": ["Todo cancelado correctamente"],
+        }
+    )
+    
+    # Caso 2: Material_supplier ya reservado
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "material_ids": [1],
+                "slot_ids": [],
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El MaterialSupplier de ID 1 ya estaba en el estado de reserva False"]
+        },
+        expected_status=400
+    )
+    
+    # Caso 3: Slot ya reservado
+    template_api_test(
+        lambda: client.post(
+            path,
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "material_ids": [],
+                "slot_ids": [3],
+            }
+        ),
+        {
+            "field_errors": {},
+            "global_errors": ["El Slot de fabricación de ID 3 ya estaba en el estado de reserva False"]
         },
         expected_status=400
     )

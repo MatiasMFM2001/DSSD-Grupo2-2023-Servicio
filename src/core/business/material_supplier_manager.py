@@ -35,7 +35,10 @@ class MaterialSupplierManager(CRUDManager):
             raise ValueError(f"El material de ID {material_id} no existe.")
     
     def atomic_reserve_all(self, material_ids, slot_ids):
-        return self.database.atomic_reserve_all(material_ids, slot_ids)
+        return self.database.atomic_reserve_all(material_ids, slot_ids, True)
+    
+    def atomic_unreserve_all(self, material_ids, slot_ids):
+        return self.database.atomic_reserve_all(material_ids, slot_ids, False)
 
     def filter_available_get_list(self, material_id, min_stock, max_date):
         return self.filter_get_list(

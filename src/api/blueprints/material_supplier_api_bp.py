@@ -123,5 +123,5 @@ def atomic_un_reserve_all():
     if not isinstance(slot_ids, list):
         return SimpleErrorResponse(400, "slot_ids no es una lista")
     
-    material_suppliers_m.atomic_un_reserve_all(material_ids, slot_ids)
+    material_suppliers_m.atomic_unreserve_all(material_ids, slot_ids)
     return SimpleOKResponse("Todo cancelado correctamente")
