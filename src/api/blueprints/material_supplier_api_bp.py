@@ -105,3 +105,23 @@ def atomic_reserve_all():
     
     material_suppliers_m.atomic_reserve_all(material_ids, slot_ids)
     return SimpleOKResponse("Todo reservado correctamente")
+
+@material_supplier_api_bp.route("/un_reserve_all", methods=["POST"])
+@auth_m.permission_required("material_supplier_reserve")
+def atomic_un_reserve_all():
+    values, error = get_json({"material_ids", "slot_ids"})
+
+    if error:
+        return error
+    
+    material_ids = values["material_ids"]
+    slot_ids = values["slot_ids"]
+    
+    if not isinstance(material_ids, list):
+        return SimpleErrorResponse(400, "material_ids no es una lista")
+    
+    if not isinstance(slot_ids, list):
+        return SimpleErrorResponse(400, "slot_ids no es una lista")
+    
+    material_suppliers_m.atomic_un_reserve_all(material_ids, slot_ids)
+    return SimpleOKResponse("Todo cancelado correctamente")

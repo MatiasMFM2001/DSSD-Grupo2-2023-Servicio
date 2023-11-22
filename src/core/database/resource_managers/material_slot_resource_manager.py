@@ -26,3 +26,26 @@ class MaterialSlotResourceManager(PhysicalResourceManager):
             self.reserve_all(slot_ids, "El Slot de fabricación", FabricationSlot)
 
         self.commit()
+
+    def un_reserve_all(self, object_ids, tuple_name, model_class):
+        exists_by_id = self.exists_all(object_ids, model_class=model_class)
+        
+        for id, result in exists_by_id.items():
+            if not result:
+                raise NotFound(f"{tuple_name} de ID {id} no existe")
+        
+        for selec in self.get_all(object_ids, model_class=model_class):
+            if not selec.reserved:
+                raise ValueError(f"{tuple_name} de ID {selec.id} no estaba reservada")
+
+            selec.reserved = False
+            self.dbs.add(selec)
+    
+    def atomic_un_reserve_all(self, material_ids, slot_ids):
+        from src.core.database.board import MaterialSupplier, FabricationSlot
+        
+        with self.dbs.begin_nested():
+            self.un_reserve_all(material_ids, "El MaterialSupplier", MaterialSupplier)
+            self.un_reserve_all(slot_ids, "El Slot de fabricación", FabricationSlot)
+
+        self.commit()
