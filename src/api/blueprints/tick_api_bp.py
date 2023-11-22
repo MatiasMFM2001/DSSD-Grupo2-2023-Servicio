@@ -21,3 +21,16 @@ def tick_progreso():
     #    return error
 
     return SimpleOKResponse(percentage=percentage)
+
+@tick_api_bp.route("/arrival", methods=["GET"])
+@auth_m.permission_required("tick_show")
+def tick_arrival():
+    """Obtiene porcentaje de progreso."""
+    
+    number = round(uniform(0.7, 10.0), 2)
+    #slot, error = api_validate_id(fabrication_slots_m, request.args, tuple_name="El slot")
+
+    #if error:
+    #    return error
+
+    return SimpleOKResponse(number=number)
