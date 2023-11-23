@@ -61,7 +61,9 @@ def test_all(db_token):
                         "location": "Madrid",
                         "name": "Ensambles Don Pepe"
                     },
-                    "fabrication_progress": 0.0
+                    "fabrication_progress": 0.0,
+                    "is_fabrication_delayed": False,
+                    "can_recover_from_delay": True,
                 },
                 {
                     "beginning": "Fri, 03 Nov 2023 00:00:00 GMT",
@@ -72,7 +74,9 @@ def test_all(db_token):
                         "location": "Tarragona",
                         "name": "Fábrica Fabricio"
                     },
-                    "fabrication_progress": 0.0
+                    "fabrication_progress": 0.0,
+                    "is_fabrication_delayed": False,
+                    "can_recover_from_delay": True,
                 },
                 {
                     "beginning": "Thu, 09 Nov 2023 00:00:00 GMT",
@@ -83,7 +87,9 @@ def test_all(db_token):
                         "location": "Barcelona",
                         "name": "Armados Armando"
                     },
-                    "fabrication_progress": 0.0
+                    "fabrication_progress": 0.0,
+                    "is_fabrication_delayed": False,
+                    "can_recover_from_delay": True,
                 },
                 {
                     "beginning": "Thu, 22 Feb 2024 00:00:00 GMT",
@@ -94,7 +100,9 @@ def test_all(db_token):
                         "location": "Madrid",
                         "name": "Ensambles Don Pepe"
                     },
-                    "fabrication_progress": 0.0
+                    "fabrication_progress": 0.0,
+                    "is_fabrication_delayed": False,
+                    "can_recover_from_delay": True,
                 }
             ]
         }
@@ -125,7 +133,9 @@ def test_get_by_id(db_token):
                     "location": "Madrid",
                     "name": "Ensambles Don Pepe"
                 },
-                "fabrication_progress": 0.0
+                "fabrication_progress": 0.0,
+                "is_fabrication_delayed": False,
+                "can_recover_from_delay": True,
             }
         }
     )
@@ -170,7 +180,9 @@ def test_reserve(db_token):
                     "location": "Madrid",
                     "name": "Ensambles Don Pepe"
                 },
-                "fabrication_progress": 0.0
+                "fabrication_progress": 0.0,
+                "is_fabrication_delayed": False,
+                "can_recover_from_delay": True,
             }
         }
     )
