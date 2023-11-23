@@ -13,23 +13,24 @@ from random import uniform
 tick_api_bp = Blueprint("tick_api_bp", __name__, url_prefix="/tick")
 fabrication_slots_m = FabricationSlotManager()
 
-@tick_api_bp.route("/percentage", methods=["GET"])
+@tick_api_bp.route("/slot_progress", methods=["GET"])
 @auth_m.permission_required("tick_show")
 def tick_progreso():
     """Obtiene porcentaje de progreso."""
     
-    for slot in fabrication_slots_m.filter_by_get_list(reserved=True):
-        progress = slot.fabrication_progress + uniform(0.0, 10.0)
-        progress = min(progress, 100.0)
-        
-        fabrication_slots_m.update(slot.id, fabrication_progress=progress)
+    slot, error = api_validate_id(fabrication_slots_m, request.args, tuple_name="El slot")
+
+    if error:
+        return error
     
-    #slot, error = api_validate_id(fabrication_slots_m, request.args, tuple_name="El slot")
+    if not slot.reserved:
+        return SimpleErrorResponse(400, f"El slot de ID {slot.id} no está reservado")
+    
+    progress = slot.fabrication_progress + uniform(0.0, 10.0)
+    progress = min(progress, 100.0)
 
-    #if error:
-    #    return error
-
-    return SimpleOKResponse()
+    fabrication_slots_m.update(slot.id, fabrication_progress=progress)
+    return SimpleOKResponse("Porcentaje de slot incrementado correctamente")
 
 @tick_api_bp.route("/arrival", methods=["GET"])
 @auth_m.permission_required("tick_show")
