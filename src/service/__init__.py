@@ -11,6 +11,7 @@ from src.api.helpers.api_responses import SimpleErrorResponse
 #swagger
 from flask_swagger_ui import get_swaggerui_blueprint
 from pathlib import Path
+import traceback
 
 
 def create_app(static_folder: str = "static", env: str = "development") -> Flask:
@@ -75,6 +76,7 @@ def create_app(static_folder: str = "static", env: str = "development") -> Flask
     
     @app.errorhandler(Exception)
     def handle_error(exception):
+        print(traceback.format_exc())
         return SimpleErrorResponse(500, str(exception))
 
     #Facu estuvo aqui
