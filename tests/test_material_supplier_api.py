@@ -375,7 +375,7 @@ def test_reserve(db_token):
     path = "/api/material_supplier/reserve"
     
     
-    # Caso 1: Material_supplier reservado correctamente
+    # Caso 1.A: Material_supplier reservado correctamente
     template_api_test(
         lambda: client.post(
             path,
@@ -386,6 +386,37 @@ def test_reserve(db_token):
         ),
         {
             "global_success": ["Material_supplier reservado correctamente"],
+        }
+    )
+    
+    # Caso 1.B: Ese Material_supplier ya no aparece en la lista
+    template_api_test(
+        lambda: client.post(
+            "/api/material_supplier/multiple",
+            headers={"Authorization": f"Bearer {db_token}"},
+            json={
+                "arrival_date": "2024-02-22",
+                "material_stocks": {
+                    "4": 100,
+                },
+            }
+        ),
+        {
+            "global_success": [""],
+            "material_suppliers": {
+                "4": [
+                    {
+                        "arrival_date": "Thu, 22 Feb 2024 00:00:00 GMT",
+                        "id": 13,
+                        "material_id": 4,
+                        "stock": 100,
+                        "supplier": {
+                            "id": 1,
+                            "location": "Madrid",
+                            "name": "Maderera San Jorge"}
+                    }
+                ]
+            }
         }
     )
     
@@ -510,7 +541,7 @@ def test_reserve_all(db_token):
 def test_unreserve_all(db_token):
     path = "/api/material_supplier/un_reserve_all"
     
-    # Caso 1: Todos reservados correctamente
+    # Caso 1.A: Todos reservados correctamente
     template_api_test(
         lambda: client.post(
             path,
