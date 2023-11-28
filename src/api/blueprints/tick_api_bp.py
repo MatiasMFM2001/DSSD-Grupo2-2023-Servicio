@@ -27,7 +27,7 @@ def tick_progreso():
     if not slot.reserved:
         return SimpleErrorResponse(400, f"El slot de ID {slot.id} no está reservado")
     
-    progress = slot.fabrication_progress + uniform(0.0, 10.0)
+    progress = slot.fabrication_progress + uniform(10.0, 20.0)
     progress = min(progress, 100.0)
 
     fabrication_slots_m.update(slot.id, fabrication_progress=progress)
