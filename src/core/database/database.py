@@ -311,86 +311,87 @@ def initializate_prod_db():
     association1 = material_supplier_rm.create(
         material=material1,
         supplier=supplier1,
-        stock=5,
+        stock=200,
         arrival_date=date(2023, 12, 3),
     )
-    
+
     association2 = material_supplier_rm.create(
         material=material2,
         supplier=supplier2,
-        stock=10,
+        stock=400,
         arrival_date=date(2023, 11, 22),
     )
-    
+
     association3 = material_supplier_rm.create(
         material=material3,
         supplier=supplier3,
-        stock=15,
+        stock=600,
         arrival_date=date(2023, 11, 15),
     )
 
     association4 = material_supplier_rm.create(
         material=material4,
         supplier=supplier1,
-        stock=8,
+        stock=800,
         arrival_date=date(2023, 12, 10),
     )
 
     association5 = material_supplier_rm.create(
         material=material5,
         supplier=supplier2,
-        stock=12,
+        stock=1000,
         arrival_date=date(2023, 11, 30),
     )
 
     association6 = material_supplier_rm.create(
         material=material6,
         supplier=supplier3,
-        stock=20,
+        stock=1200,
         arrival_date=date(2023, 11, 18),
     )
-    
+
     association7 = material_supplier_rm.create(
         material=material1,
         supplier=supplier2,
-        stock=3,
+        stock=300,
         arrival_date=date(2023, 12, 5),
     )
 
     association8 = material_supplier_rm.create(
         material=material2,
         supplier=supplier3,
-        stock=7,
+        stock=700,
         arrival_date=date(2023, 12, 8),
     )
 
     association9 = material_supplier_rm.create(
         material=material3,
         supplier=supplier1,
-        stock=10,
+        stock=1000,
         arrival_date=date(2023, 12, 12),
     )
 
     association10 = material_supplier_rm.create(
         material=material4,
         supplier=supplier2,
-        stock=5,
+        stock=500,
         arrival_date=date(2023, 12, 2),
     )
 
     association11 = material_supplier_rm.create(
         material=material5,
         supplier=supplier3,
-        stock=15,
+        stock=1500,
         arrival_date=date(2023, 12, 7),
     )
 
     association12 = material_supplier_rm.create(
         material=material6,
         supplier=supplier1,
-        stock=18,
+        stock=1800,
         arrival_date=date(2023, 12, 14),
     )
+
 
     
     
@@ -403,13 +404,6 @@ def initializate_prod_db():
     )
     
     slot2 = fabrication_slot_rm.create(
-        price=92070.0,
-        beginning=date(2023, 11, 3),
-        end=date(2024, 2, 1),
-        producer=producer2,
-    )
-    
-    slot3 = fabrication_slot_rm.create(
         price=55033.5,
         beginning=date(2023, 11, 9),
         end=date(2024, 1, 30),
